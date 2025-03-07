@@ -1,0 +1,66 @@
+version: "3"
+
+services:
+  frontend:
+    tty: true
+    stdin_open: true
+    build: ./Frontend/eco/
+    container_name: eco-frontend-container
+    volumes:
+      - ./Frontend/eco/src:/app/src:ro
+    ports:
+      - "3030:3030"
+    environment:
+      - WATCHPACK_POLLING=true #Necesario para usuarios con windows
+    networks:
+      docnet:
+        ipv4_address: 10.10.10.4
+
+  backend:
+    build: ./Backend/API
+    container_name: python-api-container
+    ports:
+      - "4040:4040"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - FLASK_APP=app.py
+    networks:
+      docnet:
+        ipv4_address: 10.10.10.5
+
+  ai:
+    build: ./Backend/AI
+    container_name: ai-api-container
+    volumes:
+      - ./Backend/AI:/AI:ro
+    ports:
+      - "5050:5050"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - FLASK_APP=app.py
+    networks:
+      docnet:
+        ipv4_address: 10.10.10.6
+
+  database:
+    build: ./Backend/DB
+    container_name: db-api-container
+    volumes:
+      - ./Backend/DB:/DB:rw
+      - ./Backend/DB/backup.sql:/docker-entrypoint-initdb.d/backup.sql:ro
+    ports:
+      - "6060:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_ROOT_PASSWORD}
+    networks:
+      docnet:
+        ipv4_address: 10.10.10.7
+
+
+
+networks:
+  docnet:
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24
