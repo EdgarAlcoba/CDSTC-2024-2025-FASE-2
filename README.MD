@@ -1,9 +1,9 @@
 # APP name
 ## Languages
-- [ 🇪🇸 Spanish (ESP)](#spanish-esp)
-- [ 🇬🇧 English (EN)](#english-en)
+- [ Español (ES)](#español-es)
+- [ English (EN)](#english-en)
 
-## Spanish (ESP)
+## Español (ES)
 ### Sobre el proyecto:
 El proyecto consiste en la creación de una aplicación que ayude a fomentar el turismo ecológico.
 

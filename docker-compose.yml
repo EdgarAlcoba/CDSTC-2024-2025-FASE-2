@@ -4,12 +4,12 @@ services:
   frontend:
     tty: true
     stdin_open: true
-    build: ./Frontend/eco/
+    build: ./Frontend
     container_name: eco-frontend-container
     volumes:
-      - ./Frontend/eco/src:/app/src:ro
+      - ./Frontend/src:/app/src:ro
     ports:
-      - "3030:3030"
+      - "3030:3000"
     environment:
       - WATCHPACK_POLLING=true #Necesario para usuarios con windows
     networks:
@@ -46,7 +46,7 @@ services:
     build: ./Backend/DB
     container_name: db-api-container
     volumes:
-      - ./Backend/DB:/DB:rw
+      - ./Backend/DB/mysql:/var/lib/mysql:rw
       - ./Backend/DB/backup.sql:/docker-entrypoint-initdb.d/backup.sql:ro
     ports:
       - "6060:3306"
