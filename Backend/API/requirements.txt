@@ -1,2 +1,9 @@
-Flask==3.0.2
 python-dotenv==1.0.1
+uvicorn
+sqlmodel
+mysql-connector-python
+passlib
+bcrypt==4.3.0
+fastapi
+pandas
+python-multipart==0.0.20
