@@ -1,0 +1,120 @@
+body {
+    background-color: #D3ED00 !important ;
+}
+
+.info-container {
+    width: 100vw;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    object-fit: contain;
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.spacer{
+    min-height: 5vh;
+    max-height: 10vh;
+}
+
+.info-body {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    margin: 0% 10% 0;
+}
+
+.welcome-label {
+    color: #000;
+    font-size: 5.5rem;
+    font-weight: 700;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.info-text {
+    color: #000;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    text-align: justify;
+}
+
+.creators {
+    color: #000;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-left: 2rem;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    text-align: justify;
+}
+
+.fist-aid-label{
+    color: #fff;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+.home-start-button {
+    padding: 1rem 2rem;
+    background-color: #187700;
+    color: #fff;
+    outline: none;
+    border: none;
+    max-width: 40vw;
+    border-radius: 5rem;
+    font-size: 3rem;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.home-start-button:hover {
+    background-color: #125100;
+    color: #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 1900px) {
+    .welcome-label {
+        font-size: 10rem;
+    }
+
+    .fist-aid-label{
+        font-size: 8rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .welcome-label {
+        font-size: 4rem;
+    }
+
+    .fist-aid-label{
+        font-size: 2.5rem;
+    }
+
+    .home-start-button {
+        max-width: 60vw;
+        font-size: 2rem;
+    }
+}
+
+.sinco{
+    max-height: 45%;
+    margin-left: -1vw;
+}

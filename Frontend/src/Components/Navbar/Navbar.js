@@ -11,11 +11,18 @@ const Navbar = () => {
   const menuOptions = [
     {
       text: "Home",
-      icon: <HomeIcon />
+      icon: <HomeIcon />,
+      link: "/"
+    },
+    {
+      text: "About us",
+      icon: <InfoIcon />,
+      link: "/info"
     },
     {
       text: "Login",
-      icon: <InfoIcon />
+      icon: <InfoIcon />,
+      link: "/login"
     }
   ];
 
@@ -29,6 +36,8 @@ const Navbar = () => {
       <div className="navbar-links-container">
         <Link to="/" className="navbar-link">Home</Link>
         <Link to="/info" className="navbar-link">Info</Link>
+        <Link to="/magazine" className="navbar-link">Book</Link>
+        <Link to="/travelplanner" className="navbar-link">Planner</Link>
         <Link to="/login" className="button-link">
           <button className="primary-button">
             Login
@@ -48,12 +57,14 @@ const Navbar = () => {
           <List style={{ width: '100%' }}>
             {menuOptions.map((item) => (
               <ListItem key={item.text} disablePadding >
+                <Link to={item.link} className="navbar-link">
                 <ListItemButton style={{ width: '100%' }} sx={{ alignItems: 'center' }}>
                   <ListItemIcon>
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText primary={item.text} sx={{ fontSize: '20px !important' }} />
                 </ListItemButton>
+                </Link>
               </ListItem>
             ))}
           </List>

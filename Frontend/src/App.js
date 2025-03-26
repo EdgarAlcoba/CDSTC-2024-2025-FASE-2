@@ -1,16 +1,16 @@
-import logo from './Components/Assets/docGPTLogo.svg';
 import './App.css';
-import FacebookLogin from '@greatsumini/react-facebook-login';
-import LoginForm from './Components/LoginForm/LoginForm';
-import RegisterForm from './Components/RegisterForm/RegisterForm';
-import Home from './Components/HomePage/Home';
-import Info from './Components/InfoPage/Info';
-import Chat from './Components/Chat/Chat';
+//import FacebookLogin from '@greatsumini/react-facebook-login';
+import LoginForm from './pages/LoginForm/LoginForm';
+import RegisterForm from './pages/RegisterForm/RegisterForm';
+import Home from './pages/HomePage/Home';
+import Info from './pages/InfoPage/Info';
+import Chat from './pages/Chat/Chat';
+import Magazine from './pages/MagazinePage/Magazine'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
-  let inicio = false;
+  //let inicio = false;
 
   function getComp() {
     /*if(inicio){
@@ -28,6 +28,8 @@ function App() {
           <Route path='/login' element={<LoginForm />} />
           <Route path='/register' element={<RegisterForm />} />
           <Route path='/chat/:userID' element={<Chat />} />
+          <Route path='/magazine' element={<Magazine />} />
+          <Route path='/travelplanner' element={<></>} />
         </Routes>
       </Router>
       <header className="App-header">
