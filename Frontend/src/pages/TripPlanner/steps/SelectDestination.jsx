@@ -19,7 +19,7 @@ const SelectDestination = ({ tripData, setTripData }) => {
   return (
     <div>
       <h2 className="text-lg font-medium mb-2">¿Qué destino prefieres?</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-3 gap-4 p-4">
         {destinations.map((city) => (
           <Place
             key={city.name}
