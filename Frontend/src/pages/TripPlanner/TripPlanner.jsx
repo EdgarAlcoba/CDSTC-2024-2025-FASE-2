@@ -34,8 +34,13 @@ const TripPlanner = () => {
     }
   }
 
+  const onGenerateTrip = () => {
+    console.log(tripData);
+  };
+
   useEffect(() => {
-    setSubmitReady(step === 4);
+    setSubmitReady(step === Object.keys(tripData).length);
+    console.log(step);
   }, [step]);
 
   return (
@@ -64,13 +69,16 @@ const TripPlanner = () => {
             <div className="mb-28">
                 <NavButtons
                     submitReady={submitReady}
-                    disabledNext={step == tripData.length - 1}
+                    disabledNext={step > Object.keys(tripData).length}
                     disabledBack={step == 0}
                     onBack={() => {
                     setStep((currStep) => currStep - 1);
                     }}
                     onNext={() => {
-                    setStep((currStep) => currStep + 1);
+                        setStep((currStep) => currStep + 1);
+                        if (step >= Object.keys(tripData).length) {
+                            onGenerateTrip();    
+                        }
                     }}
                 />
             </div>

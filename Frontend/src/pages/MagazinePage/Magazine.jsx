@@ -24,7 +24,6 @@ const Magazine = () => {
           </Suspense>
         </group>
       </Canvas>
-      <UI />
     </div>
   );
 };
