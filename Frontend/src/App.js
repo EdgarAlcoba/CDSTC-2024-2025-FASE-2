@@ -6,6 +6,7 @@ import Home from './pages/HomePage/Home';
 import Info from './pages/InfoPage/Info';
 import Chat from './pages/Chat/Chat';
 import Magazine from './pages/MagazinePage/Magazine'
+import TripPlanner from './pages/TripPlanner/TripPlanner';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -29,7 +30,7 @@ function App() {
           <Route path='/register' element={<RegisterForm />} />
           <Route path='/chat/:userID' element={<Chat />} />
           <Route path='/magazine' element={<Magazine />} />
-          <Route path='/travelplanner' element={<></>} />
+          <Route path='/travelplanner' element={<TripPlanner />} />
         </Routes>
       </Router>
       <header className="App-header">
