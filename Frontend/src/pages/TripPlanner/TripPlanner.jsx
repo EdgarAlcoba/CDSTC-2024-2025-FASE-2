@@ -6,10 +6,13 @@ import SelectBudget from "./steps/SelectBudget";
 import Summary from "./steps/Summary";
 import NavButtons from "../../components/TripPlanner/NavButtons";
 import { Link } from 'react-router-dom';
+import { Snackbar } from "@mui/material";
+import Alert from '@mui/material/Alert';
 
 const TripPlanner = () => {
   const [step, setStep] = useState(0);
   const [submitReady, setSubmitReady] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [tripData, setTripData] = useState({
     destination: "",
     transport: "",
@@ -35,13 +38,22 @@ const TripPlanner = () => {
   }
 
   const onGenerateTrip = () => {
+    if (tripData.destination === "" || tripData.transport === "" || tripData.activities.length === 0 || tripData.budget === 0) {
+      setSnackbarOpen(true);
+      return;
+    }
+  
     console.log(tripData);
   };
+  
 
   useEffect(() => {
     setSubmitReady(step === Object.keys(tripData).length);
-    console.log(step);
   }, [step]);
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen p-5">
@@ -75,14 +87,26 @@ const TripPlanner = () => {
                     setStep((currStep) => currStep - 1);
                     }}
                     onNext={() => {
+                      if (step < Object.keys(tripData).length) {
                         setStep((currStep) => currStep + 1);
-                        if (step >= Object.keys(tripData).length) {
-                            onGenerateTrip();    
-                        }
+                      } else {
+                        onGenerateTrip();
+                      }
                     }}
                 />
-            </div>
-        </div>  
+              </div>
+          </div>
+
+          <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+            <Alert
+              onClose={handleSnackbarClose}
+              severity="error"
+              variant="filled"
+              sx={{ width: '100%' }}
+            >
+              Rellena todos los campos antes!
+            </Alert>
+          </Snackbar>
 
     </div>
   );
