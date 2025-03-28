@@ -38,6 +38,7 @@ const Navbar = () => {
         <Link to="/info" className="navbar-link">Info</Link>
         <Link to="/magazine" className="navbar-link">Book</Link>
         <Link to="/travelplanner" className="navbar-link">Planner</Link>
+        <Link to="/dashboard" className='navbar-link'>Dashboard</Link>
         <Link to="/login" className="button-link">
           <button className="primary-button">
             Login
