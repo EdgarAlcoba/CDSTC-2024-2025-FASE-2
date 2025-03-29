@@ -1,5 +1,6 @@
 from fastapi import UploadFile, HTTPException
 from datetime import date, datetime
+import pandas as pd
 
 def validate_all_csv_exist(files: list[UploadFile]) -> dict[str, UploadFile]:
     num_files: int = len(files)
@@ -45,7 +46,7 @@ def validate_all_csv_exist(files: list[UploadFile]) -> dict[str, UploadFile]:
 
     return valid_files
 
-def validate_datos_sostenibilidad(row: str, row_num: int):
+def validate_datos_sostenibilidad(row: pd.Series, row_num: int):
     filename: str = "datos_sostenibilidad.csv"
     csv_hotel_name: str = row["hotel_nombre"]
     if len(csv_hotel_name) == 0:
@@ -96,7 +97,7 @@ def validate_datos_sostenibilidad(row: str, row_num: int):
         csv_hotel_water_usage, csv_hotel_power_kwh
     )
 
-def validate_ocupacion_hostelera(row: str, row_num: int):
+def validate_ocupacion_hostelera(row: pd.Series, row_num: int):
     filename: str = "ocupacion_hostera.csv"
     csv_hotel_name: str = row["hotel_nombre"]
     if len(csv_hotel_name) == 0:
@@ -147,7 +148,7 @@ def validate_ocupacion_hostelera(row: str, row_num: int):
         csv_cancellations, csv_avg_night_price
     )
 
-def validate_opiniones_turisticas(row: str, row_num: int):
+def validate_opiniones_turisticas(row: pd.Series, row_num: int):
     filename: str = "opiniones_turisticas.csv"
     csv_review_date: date
     try:
@@ -193,7 +194,9 @@ def validate_opiniones_turisticas(row: str, row_num: int):
             detail=f"{filename} has an invalid star count value in row {row_num}, must be an integer with format [0-5]"
         )
 
-    csv_review: str = str(row["comentario"]).replace('"', '') + str(row["idioma"]).replace('"', '')
+    csv_review: str = row["comentario"].replace('"', '')
+    if not pd.isna(row["idioma"]):
+        csv_review += row["idioma"].replace('"', '')
     if len(csv_review) == 0:
         raise HTTPException(
             status_code=400,
@@ -206,11 +209,59 @@ def validate_opiniones_turisticas(row: str, row_num: int):
         csv_review
     )
 
-def validate_rutas_turisticas(row: str, row_num: int):
-    # TODO validate csv rutas turisticas
-    print("")
+def validate_rutas_turisticas(row: pd.Series, row_num: int):
+    filename: str = "rutas_turisticas.csv"
+    csv_route_name: str = row["ruta_nombre"]
+    if len(csv_route_name) == 0:
+        raise HTTPException(
+            status_code=400,
+            detail=f"{filename} has an empty route name in row {row_num}"
+        )
+    csv_route_name = csv_route_name.split("-")[0].strip()
+    csv_route_type: str = row["tipo_ruta"]
+    if len(csv_route_type) == 0:
+        raise HTTPException(
+            status_code=400,
+            detail=f"{filename} has an empty route type in row {row_num}"
+        )
+    csv_route_length_km: float
+    try:
+        csv_route_length_km = float(row["longitud_km"])
+        if csv_route_length_km < 0:
+            raise ValueError
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail=f"{filename} has an invalid route length in row {row_num}, must be a positive float"
+        )
+    csv_route_duration_hr: float
+    try:
+        csv_route_duration_hr = float(row["duracion_hr"])
+        if csv_route_duration_hr < 0:
+            raise ValueError
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail=f"{filename} has an invalid route duration in row {row_num}, must be a positive float"
+        )
+    csv_route_popularity: float
+    try:
+        csv_route_popularity = float(row["popularidad"])
+        if csv_route_popularity < 0 or csv_route_popularity > 5:
+            raise ValueError
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail=f"{filename} has an invalid route duration in row {row_num}, must be a float between 0 and 5"
+        )
 
-def validate_datos_uso_transporte(row: str, row_num: int):
+    return (
+        csv_route_name, csv_route_type,
+        csv_route_length_km, csv_route_duration_hr,
+        csv_route_popularity
+    )
+
+def validate_datos_uso_transporte(row: pd.Series, row_num: int):
     filename: str = "datos_uso_transporte.csv"
     csv_transport_usage_date: date = datetime.now().date()
     try:

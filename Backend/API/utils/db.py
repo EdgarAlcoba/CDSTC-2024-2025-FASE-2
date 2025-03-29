@@ -9,6 +9,8 @@ from ..dto.hotel import Hotel
 from ..dto.review import Review
 from ..dto.hotel_consumption import HotelConsumption
 from ..dto.hotel_occupation import HotelOccupation
+from ..dto.touristic_route import TouristicRoute
+from ..dto.transport_usage import TransportUsage
 
 db_host = os.environ.get('DB_HOST')
 db_user = os.environ.get('DB_USERNAME')

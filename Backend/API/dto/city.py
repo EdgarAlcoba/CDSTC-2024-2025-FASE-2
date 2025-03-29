@@ -15,3 +15,20 @@ class City(SQLModel, table=True):
         back_populates="city",
         cascade_delete=True
     )
+
+    touristic_routes: List["TouristicRoute"] = Relationship(
+        back_populates="city",
+        cascade_delete=True
+    )
+
+    transport_usages_origins: List["TransportUsage"] = Relationship(
+        back_populates="origin_city",
+        sa_relationship_kwargs={"foreign_keys": "TransportUsage.origin_city_id"},
+        cascade_delete=True
+    )
+
+    transport_usages_destinations: List["TransportUsage"] = Relationship(
+        back_populates="destination_city",
+        sa_relationship_kwargs={"foreign_keys": "TransportUsage.destination_city_id"},
+        cascade_delete=True
+    )

@@ -1,6 +1,7 @@
 from sqlmodel import select
 from sqlalchemy import func
 
+from ..dto import hotel_consumption
 from ..utils.constants import init as get_constants
 from ..utils.db import get_session
 from ..dto.hotel_consumption import HotelConsumption
@@ -32,9 +33,9 @@ class HotelsConsumption:
         # Obtain maximum values
         session = next(get_session())
         query_get_maximums = select(
-            func.max(HotelConsumption.energy_kwh).label('energy_kwh'),
-            func.max(HotelConsumption.waste_kg).label('waste_kg'),
-            func.max(HotelConsumption.water_usage_m3).label('water_usage_m3')
+            func.max(HotelConsumption.energy_kwh),
+            func.max(HotelConsumption.waste_kg),
+            func.max(HotelConsumption.water_usage_m3)
         )
         maximums_result = session.execute(query_get_maximums).first()
         if len(maximums_result) < 1:
@@ -44,7 +45,7 @@ class HotelsConsumption:
         water_usage_m3_max = maximums_result[2]
 
         # Get hotels consumptions to compute their indexes
-        db_hotels_consumption: list[HotelConsumption] = session.execute(select(HotelConsumption)).all()
+        db_hotels_consumption: list[HotelConsumption] = session.scalars(select(HotelConsumption)).all()
 
         for db_hotel_consumption in db_hotels_consumption:
             db_hotel_consumption.sustainability_percent = \

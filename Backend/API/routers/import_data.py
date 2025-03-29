@@ -2,6 +2,8 @@ from fastapi import APIRouter, UploadFile, Response
 
 from ..dao.reviews import Reviews
 from ..dao.services import Services
+from ..dao.touristic_routes import TouristicRoutes
+from ..dao.transport_usages import TransportUsages
 from ..utils.validate_csv import validate_all_csv_exist
 from ..dao.cities import Cities
 from ..dao.hotels import Hotels
@@ -17,6 +19,8 @@ async def import_data(files: list[UploadFile], response: Response):
     HotelsConsumption.generate_sustainability_indexes()
     Services.import_from_csv(files)
     Reviews.import_from_csv(files)
+    TouristicRoutes.import_from_csv(files)
+    TransportUsages.import_from_csv(files)
     return "OK"
 
 

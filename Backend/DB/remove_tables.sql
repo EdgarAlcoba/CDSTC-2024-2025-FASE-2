@@ -3,5 +3,7 @@ DROP TABLE Hotels_Occupation;
 DROP TABLE Reviews;
 DROP TABLE Hotels;
 DROP TABLE Services;
+DROP TABLE Touristic_Routes;
+DROP TABLE Transport_Usages;
 DROP TABLE Cities;
 DROP TABLE Users;
