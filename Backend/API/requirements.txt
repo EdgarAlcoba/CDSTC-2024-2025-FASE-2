@@ -1,9 +1,11 @@
-python-dotenv==1.0.1
-uvicorn
+python-dotenv>=1.0.1
+uvicorn>=0.34.0
 sqlmodel
 mysql-connector-python
 passlib
-bcrypt==4.3.0
+bcrypt>=4.3.0
 fastapi
 pandas
-python-multipart==0.0.20
+python-multipart>=0.0.20
+pyjwt>=2.10.1
+argon2_cffi>=23.1.0

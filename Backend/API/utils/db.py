@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine
-from sqlmodel import Session, SQLModel
+from sqlmodel import Session, SQLModel, select
+from passlib.hash import argon2
+
 import os
 
 from ..dto.user import User
@@ -11,6 +13,7 @@ from ..dto.hotel_consumption import HotelConsumption
 from ..dto.hotel_occupation import HotelOccupation
 from ..dto.touristic_route import TouristicRoute
 from ..dto.transport_usage import TransportUsage
+from ..utils.constants import init as get_constants
 
 db_host = os.environ.get('DB_HOST')
 db_user = os.environ.get('DB_USERNAME')
@@ -44,6 +47,23 @@ def get_session():
     with Session(engine) as session:
         yield session
 
+def create_superadmin():
+    session = next(get_session())
+    constants = get_constants()
+    db_superadmins: list[User] = session.exec(select(User).where(User.email == constants["SUPERADMIN_EMAIL"])).all()
+    if len(db_superadmins) < 1:
+        session.add(User(
+            name="Super",
+            surname="Admin",
+            email=constants["SUPERADMIN_EMAIL"],
+            password=argon2.hash(constants["SUPERADMIN_PASSWORD"]),
+            mock=True,
+            role="admin"
+        ))
+        session.commit()
+
+
 def init_db():
     SQLModel.metadata.create_all(engine)
-    # TODO create superuser if does not exist
+    create_superadmin()
+

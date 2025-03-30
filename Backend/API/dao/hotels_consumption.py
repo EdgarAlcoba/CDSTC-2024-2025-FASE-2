@@ -1,5 +1,6 @@
 from sqlmodel import select
 from sqlalchemy import func
+from datetime import date
 
 from ..dto import hotel_consumption
 from ..utils.constants import init as get_constants
@@ -7,6 +8,17 @@ from ..utils.db import get_session
 from ..dto.hotel_consumption import HotelConsumption
 
 class HotelsConsumption:
+    @staticmethod
+    def get_average_eco_index(consumed_on: date) -> float:
+        session = next(get_session())
+        db_hotels_average_eco_index: float = \
+            session.execute(select(func.avg(HotelConsumption.sustainability_percent)).where(
+                HotelConsumption.consumed_on == consumed_on)
+            ).scalar_one()
+        return db_hotels_average_eco_index
+
+
+
     @staticmethod
     def calculate_sustainability_percent(
         energy_kwh: int, waste_kg: int,

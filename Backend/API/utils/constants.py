@@ -1,6 +1,6 @@
 import os
 
-def init_sustainability(constants: dict[str,any]) -> any:
+def init_sustainability(constants: dict[str,any]):
     sustainability_indexes = {
         "SUSTAINABILITY_INDEX_ENERGY_IMPORTANCE": "0.40",
         "SUSTAINABILITY_INDEX_WASTE_IMPORTANCE": "0.2",
@@ -25,10 +25,48 @@ def init_sustainability(constants: dict[str,any]) -> any:
     if total_importance < 0 or total_importance > 1:
         raise RuntimeError(f"Sustainability index importances sum must be a float between 0 and 1. Got {total_importance}")
 
+def init_jwt(constants: dict[str,any]) -> any:
+    jwt_secret_key = os.environ.get(
+        "JWT_SECRET_KEY",
+        "53aac3bcc5ef7f3596ddbbd3aef2f8b01a776a6ca9c0b5e7e8e69a1feb5ac88a"
+    )
+    if len(jwt_secret_key) != 64:
+        raise RuntimeError("JWT_SECRET_KEY must be 64 characters long. You can generate one using the command (openssl rand -hex 32)")
+    constants["JWT_SECRET_KEY"] = jwt_secret_key
+
+    jwt_algorithm = os.environ.get("JWT_ALGORITHM", "HS256")
+    jwt_supported_algorithms = ["HS256", "HS384", "HS512", "ES256", "ES256K", "ES384", "ES512",
+                                "RS256", "RS384", "RS512", "PS256", "PS384", "PS512"]
+    if jwt_algorithm not in jwt_supported_algorithms:
+        raise RuntimeError(f"JWT_ALGORITHM is not supported. Supported algorithms are {jwt_supported_algorithms}")
+    constants["JWT_ALGORITHM"] = jwt_algorithm
+
+    jwt_expire_minutes = os.environ.get("JWT_EXPIRE_MINUTES", 1440)
+    jwt_expire_minutes_int: int
+    try:
+        jwt_expire_minutes_int = int(jwt_expire_minutes)
+        if jwt_expire_minutes_int < 0:
+            raise ValueError
+        constants["JWT_EXPIRE_MINUTES"] = jwt_expire_minutes_int
+    except ValueError:
+        raise RuntimeError("JWT_EXPIRE_MINUTES must be a positive integer")
+
+def init_superadmin(constants: dict[str,any]) -> any:
+    superadmin_email = os.environ.get("SUPERADMIN_EMAIL", "superadmin")
+    if len(superadmin_email) < 1:
+        raise RuntimeError("SUPERADMIN_EMAIL cannot be empty")
+    constants["SUPERADMIN_EMAIL"] = superadmin_email
+
+    superadmin_password = os.environ.get("SUPERADMIN_PASSWORD", "0000")
+    if len(superadmin_password) < 1:
+        raise RuntimeError("SUPERADMIN_PASSWORD cannot be empty")
+    constants["SUPERADMIN_PASSWORD"] = superadmin_password
 
 def init() -> dict[str, any]:
     constants = {}
     init_sustainability(constants)
+    init_jwt(constants)
+    init_superadmin(constants)
     return constants
 
 

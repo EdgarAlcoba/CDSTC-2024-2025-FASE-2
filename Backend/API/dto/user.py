@@ -9,6 +9,7 @@ class User(SQLModel, table=True):
     email: str = Field(nullable=False, unique=True)
     password: str = Field(nullable=False),
     mock: bool = Field(default=True, nullable=False)
+    role: str = Field(nullable=False, default="basic")
     twofactor_master: Optional[str] = Field(default=None, max_length=32)
     twofactor_recovery_codes: Optional[str] = Field(default=None)
     recovery_code: Optional[str] = Field(default=None, max_length=6)
