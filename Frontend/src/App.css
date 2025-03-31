@@ -19,49 +19,14 @@ img {
     margin: 0rem auto;
 }
 
-.App-link {
-    color: #61dafb;
-}
-
-
 body {
     height: 100dvh;
     width: 100dvw;
     overflow-x: hidden;
-    background-color: #D3ED00;
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 90px;
-    max-height: 10vh;
-    box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.5);
-    background-color: #85C124;
 }
 
 .navbar-menu-container {
     display: none;
-}
-
-nav:hover {
-    box-shadow: 5px 20px 60px rgba(0, 0, 0, 0.8);
-}
-
-.nav-logo-container {
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    max-width: 200px;
-}
-
-.navbar-links-container .navbar-link {
-    margin-right: 3.2rem;
-    text-decoration: none;
-    color: black;
-    font-size: 1.5rem;
-    font-weight: 700;
 }
 
 .navbar-links-container .button-link {
@@ -72,25 +37,6 @@ nav:hover {
     background-color: transparent;
     box-shadow: 0px 3px rgba(0, 0, 0, 0.7);
     box-shadow: inset;
-}
-
-.primary-button {
-    padding: 0.9rem 1.75rem;
-    background-color: #187700;
-    color: #fff;
-    outline: none;
-    border: none;
-    border-radius: 5rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    font-weight: 700;
-    transition: 0.2s;
-}
-
-.primary-button:hover {
-    background-color: #125100;
-    color: #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .navbar-menu-container svg {

@@ -6,7 +6,7 @@ import Logo from "../../components/Assets/SincoLogo.svg";
 
 const Info = () => {
   return (
-    <div className="info-container">
+    <div className="">
       <Navbar />
 
       <div className="info-body">

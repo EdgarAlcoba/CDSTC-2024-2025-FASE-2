@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../Assets/docGPTAltLogo.svg';
+import Logo from '../Assets/logoipsum-215.svg';
 import { Box, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, List } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
@@ -27,24 +27,29 @@ const Navbar = () => {
   ];
 
   return (
-    <nav>
-      <div className="nav-logo-container">
+    <nav className="flex items-center justify-between min-h-[90px] max-h-[10vh] shadow-sm hover:shadow-xl 
+    bg-tea-green rounded-xl mt-4 mx-5">
+
+      <div className="mt-2.5 ml-5 mb-2.5 max-w-[200px]">
         <Link to="/">
-          <img src={Logo} alt="DocGPT" />
+          <img src={Logo} alt="GreenTrip logo" />
         </Link>
       </div>
-      <div className="navbar-links-container">
-        <Link to="/" className="navbar-link">Home</Link>
-        <Link to="/info" className="navbar-link">Info</Link>
-        <Link to="/magazine" className="navbar-link">Book</Link>
-        <Link to="/travelplanner" className="navbar-link">Planner</Link>
-        <Link to="/dashboard" className='navbar-link'>Dashboard</Link>
-        <Link to="/login" className="button-link">
-          <button className="primary-button">
+
+      <div className="space-x-12 no-underline text-black text-xl mr-6">
+        <Link to="/">Home</Link>
+        <Link to="/info">Info</Link>
+        <Link to="/magazine">Book</Link>
+        <Link to="/travelplanner">Planner</Link>
+        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/login">
+          <button className="px-7 py-3.5 bg-emerald text-black outline-none border-none rounded-[5rem] text-xl
+          font-thin cursor-pointer transition duration-200 hover:shadow-2xl shadow-sm">
             Login
           </button>
         </Link>
       </div>
+
       <div className="navbar-menu-container">
         <HiOutlineBars3 onClick={() => setOpenMenu(true)} />
       </div>
