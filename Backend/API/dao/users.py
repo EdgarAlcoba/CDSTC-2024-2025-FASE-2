@@ -17,13 +17,18 @@ class Users:
                 status_code=409,
                 detail="Email already exists"
             )
+        profile_picture = "default_profile_picture.png"
+        if mock:
+            profile_picture = "default_profile_picture_demo.png"
         new_user = User(
             name=name, surname=surname, email=email,
             password=argon2.hash(password),
-            mock=mock, role=role
+            mock=mock, role=role,
+            profile_picture=profile_picture
         )
         session.add(new_user)
         session.commit()
+
 
     @staticmethod
     def verify_password(email: str, password: str) -> User:
@@ -65,7 +70,8 @@ class Users:
                 name= Users.get_random_string(20),
                 surname= Users.get_random_string(20),
                 email = f"{Users.get_random_string(20)}@random.rand",
-                password = argon2.hash(Users.get_random_string(5))
+                password = argon2.hash(Users.get_random_string(5)),
+                profile_picture = "default_profile_picture_demo.png"
             ))
 
         session.add_all(users_to_create)

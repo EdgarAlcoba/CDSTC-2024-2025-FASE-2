@@ -6,7 +6,6 @@ class Hotel(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     name: str = Field(nullable=False, unique=True)
     stars: int = Field(default=0, nullable=False)
-    description: str = Field(nullable=False)
     cancel_time_limit_h: Optional[int] = Field(default=None)
     city_id: int = Field(foreign_key="Cities.id", nullable=False)
 
