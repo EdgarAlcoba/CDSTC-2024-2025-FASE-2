@@ -5,11 +5,11 @@ const Place = ({ name, description, onSelect, isSelected }) => {
     <button
       onClick={onSelect}
       className={`border rounded-lg p-5 shadow-md transition text-left ${
-        isSelected ? "border-blue-500 bg-blue-100" : "hover:shadow-lg"
+        isSelected ? "border-emerald bg-tea-green" : "hover:shadow-lg"
       }`}
     >
-      <h3 className="text-lg font-semibold">{name}</h3>
-      <p className="text-gray-600 mt-2 text-sm">{description}</p>
+      <h3 className="text-base font-semibold">{name}</h3>
+      <p className="text-gray-500 mt-2 text-sm">{description}</p>
     </button>
   );
 };

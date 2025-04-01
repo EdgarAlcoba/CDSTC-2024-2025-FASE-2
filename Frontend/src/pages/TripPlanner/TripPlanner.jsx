@@ -8,6 +8,7 @@ import NavButtons from "../../components/TripPlanner/NavButtons";
 import { Link } from 'react-router-dom';
 import { Snackbar } from "@mui/material";
 import Alert from '@mui/material/Alert';
+import NavBar from '../../components/Navbar/Navbar'
 
 const TripPlanner = () => {
   const [step, setStep] = useState(0);
@@ -56,45 +57,42 @@ const TripPlanner = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen p-5">
+    <div className="bg-white min-h-screen">
+      <NavBar />
 
-        <div className="">
-            <div className="flex justify-between">
-                <h2 className="font-bold text-3xl">Dinos cómo quieres viajar</h2>
-                <Link to="/">
-                    <button
-                    className={"px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 focus:outline-none"}>
-                    Salir
-                    </button>
-                </Link>
+        <div className="mt-5">
+            <div className="flex justify-center">
+                <h2 className="font-semibold text-3xl">What could I plan for you?</h2>
             </div>
-            <p className="mt-3 text-gray-500 text-xl">
-                GreenTrip Planner generará un itinerario según tus preferencias.
-            </p>
+            <div className="flex justify-center">
+              <p className="mt-3 text-gray-500">
+              Our AI powered assistant will help you plan it in details
+              </p>
+            </div>
         </div>
 
-        <div className="flex flex-col min-h-screen">
-            <div className="flex-grow flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center min-h-[70vh] mt-5">
+            <div className="flex-grow flex flex-col justify-center items-center">
                 {pageDisplay()}
-            </div>
-
-            <div className="mb-28">
-                <NavButtons
-                    submitReady={submitReady}
-                    disabledNext={step > Object.keys(tripData).length}
-                    disabledBack={step == 0}
-                    onBack={() => {
-                    setStep((currStep) => currStep - 1);
-                    }}
-                    onNext={() => {
-                      if (step < Object.keys(tripData).length) {
-                        setStep((currStep) => currStep + 1);
-                      } else {
-                        onGenerateTrip();
-                      }
-                    }}
-                />
               </div>
+
+              <div className="">
+                  <NavButtons
+                      submitReady={submitReady}
+                      disabledNext={step > Object.keys(tripData).length}
+                      disabledBack={step == 0}
+                      onBack={() => {
+                      setStep((currStep) => currStep - 1);
+                      }}
+                      onNext={() => {
+                        if (step < Object.keys(tripData).length) {
+                          setStep((currStep) => currStep + 1);
+                        } else {
+                          onGenerateTrip();
+                        }
+                      }}
+                  />
+                </div>
           </div>
 
           <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>

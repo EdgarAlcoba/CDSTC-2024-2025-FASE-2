@@ -27,7 +27,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="flex items-center justify-between min-h-[90px] max-h-[10vh] shadow-sm hover:shadow-xl 
+    <nav className="flex items-center justify-between min-h-[80px] max-h-[10vh] shadow-sm hover:shadow-xl 
     bg-tea-green rounded-xl mt-4 mx-5">
 
       <div className="mt-2.5 ml-5 mb-2.5 max-w-[200px]">
@@ -36,14 +36,14 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="space-x-12 no-underline text-black text-xl mr-6">
+      <div className="space-x-12 no-underline text-black text-lg mr-6">
         <Link to="/">Home</Link>
         <Link to="/info">Info</Link>
         <Link to="/magazine">Book</Link>
         <Link to="/travelplanner">Planner</Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/login">
-          <button className="px-7 py-3.5 bg-emerald text-black outline-none border-none rounded-[5rem] text-xl
+          <button className="px-7 py-3.5 bg-emerald text-black outline-none border-none rounded-[5rem] text-lg
           font-thin cursor-pointer transition duration-200 hover:shadow-2xl shadow-sm">
             Login
           </button>
