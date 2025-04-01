@@ -19,28 +19,21 @@ services:
   backend:
     build: ./Backend/API
     container_name: python-api-container
+    volumes:
+      - ./Backend/API:/API:ro
     ports:
       - "4040:4040"
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - FLASK_APP=app.py
+      - DB_NAME=${MYSQL_DATABASE_NAME}
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - DB_USERNAME=root
+      - DB_HOST=database
+    depends_on:
+      - database
     networks:
       docnet:
         ipv4_address: 10.10.10.5
-
-  ai:
-    build: ./Backend/AI
-    container_name: ai-api-container
-    volumes:
-      - ./Backend/AI:/AI:ro
-    ports:
-      - "5050:5050"
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - FLASK_APP=app.py
-    networks:
-      docnet:
-        ipv4_address: 10.10.10.6
 
   database:
     build: ./Backend/DB
@@ -52,12 +45,10 @@ services:
       - "6060:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     networks:
       docnet:
         ipv4_address: 10.10.10.7
-
-
 
 networks:
   docnet:

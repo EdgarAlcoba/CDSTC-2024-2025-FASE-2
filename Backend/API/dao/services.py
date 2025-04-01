@@ -7,8 +7,26 @@ import random
 from ..utils.validate_csv import validate_opiniones_turisticas
 from ..utils.db import get_session
 from ..dto.city import City
+from ..dto.service import Service
 
 class Services:
+    @staticmethod
+    def get_all():
+        session = next(get_session())
+        db_services = session.execute(select(Service)).scalars().all()
+        services = []
+        for service in db_services:
+            services.append({
+                "id": service.id,
+                "name": service.name,
+                "city": {
+                    "id": service.city.id,
+                    "name": service.city.name
+                }
+            })
+        return services
+
+
     @staticmethod
     def import_from_csv(valid_files: dict[str, UploadFile]):
         df_reviews = pd.read_csv(valid_files["opiniones_turisticas"].file)

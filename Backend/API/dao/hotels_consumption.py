@@ -2,20 +2,61 @@ from sqlmodel import select
 from sqlalchemy import func
 from datetime import date
 
-from ..dto import hotel_consumption
+from ..dto.hotel import Hotel
+from ..dto.city import City
 from ..utils.constants import init as get_constants
 from ..utils.db import get_session
 from ..dto.hotel_consumption import HotelConsumption
 
 class HotelsConsumption:
     @staticmethod
-    def get_average_eco_index(consumed_on: date) -> float:
+    def get_average_eco_index(consumed_on: date, city_id: int) -> float|None:
         session = next(get_session())
         db_hotels_average_eco_index: float = \
             session.execute(select(func.avg(HotelConsumption.sustainability_percent)).where(
                 HotelConsumption.consumed_on == consumed_on)
             ).scalar_one()
+        if city_id:
+            db_city: City = session.execute(select(City).where(City.id == city_id)).scalar()
+            if not db_city:
+                return None
+            db_hotels_average_eco_index: float = \
+                session.execute(select(func.avg(HotelConsumption.sustainability_percent)).where(
+                    HotelConsumption.consumed_on == consumed_on and
+                    HotelConsumption.hotel.city_id == city_id)
+                ).scalar_one()
         return db_hotels_average_eco_index
+
+    @staticmethod
+    def get_top_eco_indexes(consumed_on: date, city_id: int = None, top: int = 7) -> list[dict[str, any]]:
+        with next(get_session()) as session:
+            query = (
+                select(Hotel.id, Hotel.name, Hotel.stars, City.id, City.name, HotelConsumption.sustainability_percent)
+                .join(HotelConsumption.hotel)
+                .join(Hotel.city)
+                .where(HotelConsumption.consumed_on == consumed_on)
+                .order_by(HotelConsumption.sustainability_percent.desc())
+                .limit(top)
+            )
+
+            if city_id:
+                query = query.where(Hotel.city_id == city_id)
+
+            db_hotels_top_eco_indexes = [
+                {
+                    "id": id,
+                    "name": name,
+                    "stars": stars,
+                    "city": {
+                        "id": city_id if city_id else city_id_db,
+                        "name": city_name
+                    },
+                    "sustainability_percent": sustainability_percent,
+                }
+                for id, name, stars, city_id_db, city_name, sustainability_percent in session.execute(query).all()
+            ]
+
+        return db_hotels_top_eco_indexes
 
 
 

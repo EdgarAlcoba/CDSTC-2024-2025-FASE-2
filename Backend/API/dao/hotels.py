@@ -12,6 +12,23 @@ from ..dto.city import City
 
 class Hotels:
     @staticmethod
+    def get_all():
+        session = next(get_session())
+        db_hotels = session.execute(select(Hotel)).scalars().all()
+        hotels = []
+        for hotel in db_hotels:
+            hotels.append({
+                "id": hotel.id,
+                "name": hotel.name,
+                "stars": hotel.stars,
+                "city": {
+                    "id": hotel.city.id,
+                    "name": hotel.city.name
+                }
+            })
+        return hotels
+
+    @staticmethod
     def import_from_csv(valid_files: dict[str, UploadFile]):
         df_sustainability_data = pd.read_csv(valid_files["datos_sostenibilidad"].file)
         df_occupation_data = pd.read_csv(valid_files["ocupacion_hotelera"].file)
