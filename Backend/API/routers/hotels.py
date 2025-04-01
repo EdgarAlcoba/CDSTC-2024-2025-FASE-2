@@ -2,7 +2,7 @@ from calendar import day_abbr
 
 from fastapi import APIRouter, Request, HTTPException
 from pydantic import BaseModel
-from datetime import date
+from datetime import date, timedelta
 
 from ..dao.cities import Cities
 from ..dao.hotels import Hotels
@@ -86,11 +86,30 @@ async def get_eco_index(data: HotelInfoRequest, request: Request):
 async def get_occupation_last_7_days(data: HotelInfoRequest, request: Request):
     authenticate(request, "admin")
     occupation_last_7_days: list[float] = HotelsOccupation.get_occupation_days(data.date, data.city_id)
-    return occupation_last_7_days
+    occupation_last_7_days_array = []
+    if len(occupation_last_7_days) == 0:
+        raise HTTPException(status_code=500, detail="Could not find occupation for the last 7 days")
+    i: int = 0
+    for occupation_percent_day in occupation_last_7_days:
+        occupation_last_7_days_array.append({
+            "day": data.date - timedelta(days=i),
+            "occupation_rate": occupation_percent_day
+        })
+        i += 1
+    return occupation_last_7_days_array
 
 @router.get("/getAveragePriceLast7Days")
 async def get_average_price_last_7_days(data: HotelInfoRequest, request: Request):
     authenticate(request, "admin")
-    occupation_last_7_days: list[float] = HotelsOccupation.get_average_prices(data.date, data.city_id)
-    return occupation_last_7_days
-
+    average_price_7_days: list[float] = HotelsOccupation.get_average_prices(data.date, data.city_id)
+    average_price_7_days_array = []
+    if len(average_price_7_days) == 0:
+        raise HTTPException(status_code=500, detail="Could not find average prices for the last 7 days")
+    i: int = 0
+    for occupation_percent_day in average_price_7_days:
+        average_price_7_days_array.append({
+            "day": data.date - timedelta(days=i),
+            "average_night_price": occupation_percent_day
+        })
+        i += 1
+    return average_price_7_days_array

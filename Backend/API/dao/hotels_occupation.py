@@ -2,6 +2,7 @@ from datetime import date, timedelta
 from sqlmodel import select
 from sqlalchemy import func
 
+from ..dto.hotel import Hotel
 from ..dto.city import City
 from ..dto.hotel_occupation import HotelOccupation
 from ..utils.db import get_session
@@ -19,9 +20,11 @@ class HotelsOccupation:
             if not db_city:
                 return None
             db_hotels_occupations_avg_percent: float = \
-                session.execute(select(func.avg(HotelOccupation.rate_percent)).where(
-                    HotelOccupation.occupation_on == occupation_on and
-                    HotelOccupation.hotel.city.id == db_city.id)
+                session.execute(select(func.avg(HotelOccupation.rate_percent))
+                .join(Hotel, HotelOccupation.hotel_id == Hotel.id)
+                .where(
+                    HotelOccupation.occupation_on == occupation_on,
+                    Hotel.city_id == db_city.id)
                 ).scalar_one()
         return db_hotels_occupations_avg_percent
 
@@ -37,9 +40,11 @@ class HotelsOccupation:
             if not db_city:
                 return None
             db_hotels_total_reservations: int = \
-                session.execute(select(func.sum(HotelOccupation.confirmed_reservations)).where(
-                    HotelOccupation.occupation_on == occupation_on and
-                    HotelOccupation.hotel.city.id == db_city.id)
+                session.execute(select(func.sum(HotelOccupation.confirmed_reservations))
+                .join(Hotel, HotelOccupation.hotel_id == Hotel.id)
+                .where(
+                    HotelOccupation.occupation_on == occupation_on,
+                    Hotel.city_id == db_city.id)
                 ).scalar_one()
         return db_hotels_total_reservations
 
@@ -55,9 +60,11 @@ class HotelsOccupation:
             if not db_city:
                 return None
             db_hotels_total_cancellations: int = \
-                session.execute(select(func.sum(HotelOccupation.cancellations)).where(
-                    HotelOccupation.occupation_on == occupation_on and
-                    HotelOccupation.hotel.city.id == db_city.id)
+                session.execute(select(func.sum(HotelOccupation.cancellations))
+                .join(Hotel, HotelOccupation.hotel_id == Hotel.id)
+                .where(
+                    HotelOccupation.occupation_on == occupation_on,
+                    Hotel.city_id == db_city.id)
                 ).scalar_one()
         return db_hotels_total_cancellations
 
@@ -73,9 +80,11 @@ class HotelsOccupation:
             if not db_city:
                 return None
             db_hotels_average_price: float = \
-                session.execute(select(func.avg(HotelOccupation.avg_night_price)).where(
-                    HotelOccupation.occupation_on == occupation_on and
-                    HotelOccupation.hotel.city.id == db_city.id)
+                session.execute(select(func.avg(HotelOccupation.avg_night_price))
+                .join(Hotel, HotelOccupation.hotel_id == Hotel.id)
+                .where(
+                    HotelOccupation.occupation_on == occupation_on,
+                    Hotel.city_id == db_city.id)
                 ).scalar_one()
         return db_hotels_average_price
 
@@ -84,7 +93,7 @@ class HotelsOccupation:
         occupation_last_days: list[float] = []
         for i in range(0, last_days):
             hotel_occupation =  HotelsOccupation.get_occupations_avg_percent(
-               occupation_on - timedelta(days=last_days), city_id
+               occupation_on - timedelta(days=i), city_id
             )
             if hotel_occupation is None:
                 print(hotel_occupation)
@@ -99,7 +108,7 @@ class HotelsOccupation:
         average_prices_last_days: list[float] = []
         for i in range(0, last_days):
             average_price =  HotelsOccupation.get_average_price(
-               occupation_on - timedelta(days=last_days), city_id
+               occupation_on - timedelta(days=i), city_id
             )
             if average_price is None:
                 return []

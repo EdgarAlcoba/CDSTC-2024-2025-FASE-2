@@ -28,7 +28,7 @@ class HotelsConsumption:
         return db_hotels_average_eco_index
 
     @staticmethod
-    def get_top_eco_indexes(consumed_on: date, city_id: int = None, top: int = 10) -> list[dict[str, any]]:
+    def get_top_eco_indexes(consumed_on: date, city_id: int = None, top: int = 7) -> list[dict[str, any]]:
         with next(get_session()) as session:
             query = (
                 select(Hotel.id, Hotel.name, Hotel.stars, City.id, City.name, HotelConsumption.sustainability_percent)

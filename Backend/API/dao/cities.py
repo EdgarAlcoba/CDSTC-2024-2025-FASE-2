@@ -31,7 +31,7 @@ class Cities:
 
         # Query to get average hotel ratings for each city
         results = session.execute(
-            select(City.id, City.name, Hotel.id, func.coalesce(func.avg(Review.stars), 0))
+            select(City.id, City.name, Hotel.id, Hotel.name, func.coalesce(func.avg(Review.stars), 0))
             .join(Hotel, Hotel.city_id == City.id)
             .outerjoin(Review, Review.hotel_id == Hotel.id)  # Outer join to include hotels without reviews
             .group_by(City.id, City.name, Hotel.id)
@@ -39,14 +39,18 @@ class Cities:
 
         # Process results into structured format
         city_dict = {}
-        for city_id, city_name, hotel_id, avg_rating in results:
+        for city_id, city_name, hotel_id, hotel_name, avg_rating in results:
             if city_id not in city_dict:
                 city_dict[city_id] = {
                     "id": city_id,
                     "name": city_name,
                     "hotels": []
                 }
-            city_dict[city_id]["hotels"].append({"hotel_id": hotel_id, "average_rating": round(avg_rating, 1)})
+            city_dict[city_id]["hotels"].append({
+                "hotel_id": hotel_id,
+                "hotel_name": hotel_name,
+                "average_rating": round(avg_rating, 1)
+            })
 
         return list(city_dict.values())
 
