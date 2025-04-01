@@ -12,5 +12,4 @@ async def get_cities(request: Request):
 
 @router.get("/cities/hotelRatings")
 async def get_cities_hotel_ratings(request: Request):
-    authenticate(request, "admin")
     return Cities.get_hotel_ratings()
