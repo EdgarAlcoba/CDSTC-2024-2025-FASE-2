@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, HTTPException
 
-from Backend.API.dao.cities import Cities
+from ..dao.cities import Cities
 from ..routers.auth import authenticate
 
 router = APIRouter()
