@@ -42,6 +42,7 @@ const Navbar = () => {
         <Link to="/magazine">Book</Link>
         <Link to="/travelplanner">Planner</Link>
         <Link to="/dashboard">Dashboard</Link>
+        <Link to="/map">Map</Link>
         <Link to="/login">
           <button className="px-7 py-3.5 bg-emerald text-black outline-none border-none rounded-[5rem] text-xl
           font-thin cursor-pointer transition duration-200 hover:shadow-2xl shadow-sm">

@@ -9,6 +9,7 @@ import Magazine from './pages/MagazinePage/Magazine'
 import TripPlanner from './pages/TripPlanner/TripPlanner';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Map from './components/Map/Map'
 
 function App() {
   //let inicio = false;
@@ -32,6 +33,7 @@ function App() {
           <Route path='/magazine' element={<Magazine />} />
           <Route path='/travelplanner' element={<TripPlanner />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/map' element={<Map />} />
         </Routes>
       </Router>
       <header className="App-header">
