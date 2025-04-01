@@ -50,12 +50,13 @@ def authenticate(request: Request, role: str = "basic", fail_mode: bool = True) 
                 status_code=401,
                 detail=f"Could not find the user associated with the provided token",
             )
-        if user.role != role:
-            if not fail_mode: return None
-            raise HTTPException(
-                status_code=401,
-                detail=f"You don't have permission to do this operation",
-            )
+        if user.role != "admin":
+            if user.role != role:
+                if not fail_mode: return None
+                raise HTTPException(
+                    status_code=401,
+                    detail=f"You don't have permission to do this operation",
+                )
         return user
     except InvalidTokenError as e:
         if not fail_mode: return None

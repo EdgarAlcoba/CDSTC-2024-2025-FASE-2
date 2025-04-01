@@ -22,15 +22,15 @@ db_name = os.environ.get('DB_NAME')
 db_port = os.environ.get('DB_PORT')
 db_port_int: int = 3306
 
-if db_host is None:
+if not db_host:
     raise RuntimeError("DB_HOST environment variable is not set")
-if db_user is None:
+if not db_user:
     raise RuntimeError("DB_USERNAME environment variable is not set")
-if db_pass is None:
+if not db_pass:
     raise RuntimeError("DB_PASSWORD environment variable is not set")
-if db_name is None:
+if not db_name:
     raise RuntimeError("DB_NAME environment variable is not set")
-if db_port is not None:
+if db_port:
     try:
         db_port_int = int(db_port)
         if db_port_int < 0 or db_port_int > 65535:

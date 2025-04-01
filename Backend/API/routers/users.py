@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request
 import base64
 
-from Backend.API.routers.auth import authenticate
+from ..routers.auth import authenticate
 from ..dto.user import User
 
 router = APIRouter()

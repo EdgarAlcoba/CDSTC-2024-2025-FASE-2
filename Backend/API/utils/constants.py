@@ -67,7 +67,6 @@ def init() -> dict[str, any]:
     init_sustainability(constants)
     init_jwt(constants)
     init_superadmin(constants)
-    print(constants)
     return constants
 
 

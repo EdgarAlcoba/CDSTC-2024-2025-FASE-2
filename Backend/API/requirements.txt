@@ -5,6 +5,7 @@ mysql-connector-python
 passlib
 bcrypt>=4.3.0
 fastapi
+fastapi[standard]
 pandas
 python-multipart>=0.0.20
 pyjwt>=2.10.1
