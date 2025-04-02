@@ -7,7 +7,7 @@ router = APIRouter()
 
 @router.get("/cities")
 async def get_cities(request: Request):
-    authenticate(request, "admin")
+    #authenticate(request, "admin")
     return Cities.get_all()
 
 @router.get("/cities/hotelRatings")
