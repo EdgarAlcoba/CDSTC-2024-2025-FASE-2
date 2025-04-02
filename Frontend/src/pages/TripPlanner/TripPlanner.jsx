@@ -5,7 +5,6 @@ import SelectActivities from "./steps/SelectActivities";
 import SelectBudget from "./steps/SelectBudget";
 import Summary from "./steps/Summary";
 import NavButtons from "../../components/TripPlanner/NavButtons";
-import { Link } from 'react-router-dom';
 import { Snackbar } from "@mui/material";
 import Alert from '@mui/material/Alert';
 import NavBar from '../../components/Navbar/Navbar'
@@ -60,7 +59,7 @@ const TripPlanner = () => {
     <div className="bg-white min-h-screen">
       <NavBar />
 
-        <div className="mt-5">
+        <div className="mt-5 bg-gray-100 py-5 rounded-lg mx-5">
             <div className="flex justify-center">
                 <h2 className="font-semibold text-3xl">What could I plan for you?</h2>
             </div>
@@ -76,7 +75,7 @@ const TripPlanner = () => {
                 {pageDisplay()}
               </div>
 
-              <div className="">
+              <div className="mb-10">
                   <NavButtons
                       submitReady={submitReady}
                       disabledNext={step > Object.keys(tripData).length}
@@ -102,7 +101,7 @@ const TripPlanner = () => {
               variant="filled"
               sx={{ width: '100%' }}
             >
-              Rellena todos los campos antes!
+              Fill in all the fields!
             </Alert>
           </Snackbar>
 
