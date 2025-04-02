@@ -4,22 +4,22 @@ import { Suspense } from "react";
 import { Experience } from "../../components/Magazine/Experience";
 import { UI } from "../../components/Magazine/UI";
 import Navbar from "../../components/Navbar/Navbar";
-import "./Magazine.css";
 import { useAtom } from "jotai";
 import { pageAtom } from "../../components/Magazine/UI";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Magazine = () => {
   const cityNames = {
     0: "GreenLake Village",
     1: "Aruba Central",
     2: "Nimble Peak",
-    3: "Compostable Cloud",
+    3: "Composable Cloud",
     4: "Ezmeral Valley",
-    5: "Proliant Village",
+    5: "ProLiant Village",
     6: "Apollo Heights",
-    7: "Simplicity Springs",
-    8: "Greenlake Shores",
+    7: "Simplivity Springs",
+    8: "GreenLake Shores",
     9: "Alletra City",
     10: "HPE Innovation Hub",
     11: "GreenLake Village",
@@ -28,6 +28,30 @@ const Magazine = () => {
   const [page] = useAtom(pageAtom);
 
   const cityName = cityNames[page] || "Unknown";
+
+  const [hotelsData, setHotelsData] = useState([]);
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      fetch("http://127.0.0.1:4040/cities/hotelRatings")
+        .then((response) => {
+          if (!response.ok) throw new Error("Error al obtener los datos");
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          setHotelsData(data);
+        })
+        .catch((err) => {
+          console.log("Error fetching hotels:", err.message);
+        });
+    };
+
+    fetchHotels();
+  }, []);
+
+  const cityData = hotelsData.find((city) => city.name === cityName);
+  const hotels = cityData ? cityData.hotels : [];
 
   return (
     <div className="page-container min-h-screen w-full">
@@ -53,15 +77,20 @@ const Magazine = () => {
         <div className="flex flex-col items-center bg-white/40 rounded-xl shadow-xl p-4 h-auto w-full lg:min-h-full lg:w-[28dvw]">
           <h1 className="text-4xl font-medium mb-2">{cityName}</h1>
           <p>
-            Hotel-rating Lorem Ipsum is simply dummy text of the printing and
-            typesetting industry. Lorem Ipsum has been the industry's standard
-            dummy text ever since the 1500s, when an unknown printer took a
-            galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic
-            typesetting, remaining essentially unchanged. It was popularised in
-            the 1960s with the release of Letraset sheets containing Lorem Ipsum
-            passages, and more recently with desktop publishing software like
-            Aldus PageMaker including versions of Lorem Ipsum.
+            {hotels.length > 0 ? (
+              <>
+                <strong>Hotel Ratings:</strong>
+                <ul className="mt-2">
+                  {hotels.map((hotel, index) => (
+                    <li key={index}>
+                      {hotel.hotel_name} - ⭐ {hotel.average_rating}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <></>
+            )}
           </p>
           <Link to="/travelplanner">
             <button
