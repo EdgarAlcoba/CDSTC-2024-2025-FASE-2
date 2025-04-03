@@ -20,7 +20,7 @@ class HotelInfoRequest(BaseModel):
 async def get_hotels(request: Request):
     return Hotels.get_all()
 
-@router.get("/getOccupation")
+@router.post("/getOccupation")
 async def get_occupation(data: HotelInfoRequest, request: Request):
     #authenticate(request, "admin")
     occupations_avg_percent = HotelsOccupation.get_occupations_avg_percent(data.date, data.city_id)
@@ -32,7 +32,7 @@ async def get_occupation(data: HotelInfoRequest, request: Request):
         "occupations_avg_percent": round(occupations_avg_percent, 2)
     }
 
-@router.get("/getReservations")
+@router.post("/getReservations")
 async def get_reservations(data: HotelInfoRequest, request: Request):
     #authenticate(request, "admin")
     reservations_sum: int = HotelsOccupation.get_total_reservations(data.date, data.city_id)
@@ -44,7 +44,7 @@ async def get_reservations(data: HotelInfoRequest, request: Request):
         "reservations_sum": reservations_sum
     }
 
-@router.get("/getCancellations")
+@router.post("/getCancellations")
 async def get_cancellations(data: HotelInfoRequest, request: Request):
     #authenticate(request, "admin")
     cancellations_sum: int = HotelsOccupation.get_total_cancellations(data.date, data.city_id)
@@ -56,7 +56,7 @@ async def get_cancellations(data: HotelInfoRequest, request: Request):
         "cancellations_sum": cancellations_sum
     }
 
-@router.get("/getAveragePrice")
+@router.post("/getAveragePrice")
 async def get_average_price(data: HotelInfoRequest, request: Request):
     #authenticate(request, "admin")
     average_price: float = HotelsOccupation.get_average_price(data.date, data.city_id)
@@ -68,7 +68,7 @@ async def get_average_price(data: HotelInfoRequest, request: Request):
         "average_price": round(average_price, 2)
     }
 
-@router.get("/getEcoIndex")
+@router.post("/getEcoIndex")
 async def get_eco_index(data: HotelInfoRequest, request: Request):
     #authenticate(request, "admin")
     average_eco_index: float = HotelsConsumption.get_average_eco_index(data.date, data.city_id)
@@ -82,7 +82,7 @@ async def get_eco_index(data: HotelInfoRequest, request: Request):
         "top_eco_hotels": top_eco_indexes
     }
 
-@router.get("/getOccupationLast7Days")
+@router.post("/getOccupationLast7Days")
 async def get_occupation_last_7_days(data: HotelInfoRequest, request: Request):
     #authenticate(request, "admin")
     occupation_last_7_days: list[float] = HotelsOccupation.get_occupation_days(data.date, data.city_id)
@@ -98,7 +98,7 @@ async def get_occupation_last_7_days(data: HotelInfoRequest, request: Request):
         i += 1
     return occupation_last_7_days_array
 
-@router.get("/getAveragePriceLast7Days")
+@router.post("/getAveragePriceLast7Days")
 async def get_average_price_last_7_days(data: HotelInfoRequest, request: Request):
     #authenticate(request, "admin")
     average_price_7_days: list[float] = HotelsOccupation.get_average_prices(data.date, data.city_id)
