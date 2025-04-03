@@ -1,22 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useDate} from '../../hooks/DateContext'
+import api from '../../Api'
 
 const StatCards = () => {
 
   const { date } = useDate();
+  const [occupation, setOccupation] = useState(0);
 
   useEffect(() => {
-    /* Llamadas a back y demás */
+
+    let formattedDate = date.startDate.toLocaleDateString('en-CA');
+    
+    fetch('http://localhost/getOccupation', {
+      method: 'GET',  // 🚨 GET con body (NO estándar)
+      body: JSON.stringify({
+        date: formattedDate,
+        city_id: 0
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+    
+    
   }, [date]);
 
   return (
     <>
       <Card
         title="Occupation"
-        value="12,567"
-        percentage="2.34%"
-        trend="up"
-        period="From Jan 1st - Jul 31st" />
+        value={occupation+"%"}
+      />
       <Card 
         title="Avg price/night"
         value="$122"
@@ -36,9 +53,6 @@ const StatCards = () => {
 const Card = ({
   title,
   value,
-  percentage,
-  trend,
-  period
   }) => {
   return <div className='col-span-4 p-4 rounded border 
   border-stone-300'>
@@ -51,7 +65,7 @@ const Card = ({
         <p className='text-3xl font-semibold'>{value}
         </p>
         <h3 className='text-stone-500 mb-2 text-sm'>
-          +{percentage} than yersterday
+          +{"percentage"} than yersterday
         </h3>
       </div>
     </div>
