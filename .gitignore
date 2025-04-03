@@ -1,2 +1,3 @@
 /Backend/DB/mysql/*
 /Frontend/package-lock.json
+ai-scripts/*.csv
