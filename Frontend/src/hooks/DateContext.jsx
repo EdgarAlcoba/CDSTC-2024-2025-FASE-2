@@ -2,7 +2,7 @@ import { createContext, useState, useContext } from "react";
 
 const DateContext = createContext();
 
-const START_FROM = new Date(2019, 0, 1);
+const START_FROM = new Date(2019, 0, 7);
 
 export const DateProvider = ({ children }) => {
   const [date, setDate] = useState({ startDate: START_FROM, endDate: START_FROM });

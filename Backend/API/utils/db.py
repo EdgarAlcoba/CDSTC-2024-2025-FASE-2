@@ -41,7 +41,7 @@ if db_port:
 
 db_uri = f"mysql+mysqlconnector://{db_user}:{db_pass}@{db_host}:{db_port_int}/{db_name}"
 
-engine = create_engine(db_uri)
+engine = create_engine(db_uri, pool_size=10, max_overflow=20, pool_timeout=60)
 
 def get_session():
     with Session(engine) as session:
