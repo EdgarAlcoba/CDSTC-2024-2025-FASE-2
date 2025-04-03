@@ -1,7 +1,7 @@
 import React from 'react'
 import StatCards from './StatCards'
 import GraphCards from './Charts/GraphCards'
-import Map from './Map'
+import Map from '../Map/Map'
 import RightPanel from './RightSide/RightPanel'
 
 const Grid = () => {
