@@ -36,7 +36,7 @@ const Map = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
+    <div className="flex flex-col col-span-6 p-4 rounded border border-stone-300">
       <svg
         id="svg1"
         version="1.1"
@@ -45,6 +45,7 @@ const Map = () => {
         width="200px"
         xmlns="http://www.w3.org/2000/svg"
         onClick={handleClick}
+        className="w-full h-fit"
       >
         <g id="layer1">
           <path id="rect23" fill="#0ff" d="M8.694 5.434h195.61v195.61H8.694z" />

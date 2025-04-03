@@ -6,25 +6,56 @@ const StatCards = () => {
 
   const { date } = useDate();
   const [occupation, setOccupation] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [cancellations, setCancellations] = useState(0);
 
   useEffect(() => {
 
     let formattedDate = date.startDate.toLocaleDateString('en-CA');
-    
-    fetch('http://localhost/getOccupation', {
-      method: 'GET',  // 🚨 GET con body (NO estándar)
-      body: JSON.stringify({
-        date: formattedDate,
-        city_id: 0
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    api.post('/getOccupation', {
+      date: formattedDate,
+      city_id: 0
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
+    .then((response) => {
+      setOccupation(response.data.occupations_avg_percent);
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error al solicitar la ocupación:", error.response.data);
+      } else {
+        console.error("Error desconocido:", error.message);
+      }
+    });
     
+    api.post('/getAveragePrice', {
+      date: formattedDate,
+      city_id: 0
+    })
+    .then((response) => {
+      setPrice(response.data.average_price);
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error al solicitar el precio:", error.response.data);
+      } else {
+        console.error("Error desconocido:", error.message);
+      }
+    });
+    
+    api.post('/getCancellations', {
+      date: formattedDate,
+      city_id: 0
+    })
+    .then((response) => {
+      setCancellations(response.data.cancellations_sum);
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error al solicitar las cancelaciones:", error.response.data);
+      } else {
+        console.error("Error desconocido:", error.message);
+      }
+    }); 
     
   }, [date]);
 
@@ -36,16 +67,12 @@ const StatCards = () => {
       />
       <Card 
         title="Avg price/night"
-        value="$122"
-        percentage="4.55%"
-        trend="down"
-        period="From Jan 1st - Jul 31st"/>
+        value={"$"+price}
+      />
       <Card 
         title="Cancellations"
-        value="34"
-        percentage="7%"
-        trend="up"
-        period="Last 30 days"/>
+        value={cancellations}
+      />
     </>
   )
 }
@@ -64,9 +91,6 @@ const Card = ({
         </h3>
         <p className='text-3xl font-semibold'>{value}
         </p>
-        <h3 className='text-stone-500 mb-2 text-sm'>
-          +{"percentage"} than yersterday
-        </h3>
       </div>
     </div>
   </div>
