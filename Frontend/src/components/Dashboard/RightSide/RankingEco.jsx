@@ -36,8 +36,8 @@ const RankingEco = () => {
           <ul className="mt-4 space-y-2">
             {hotels.map((hotel, index) => (
               <li key={index} className="p-2 border-b border-gray-200">
-                <span className="font-medium text-gray-800">{hotel.name}</span>
-                <p>Eco Score: {hotel.sustainability_percent}</p>
+                <span className="text-lg font-medium text-gray-800">{hotel.name}</span>
+                <p className="text-sm text-gray-600">Eco Score: {hotel.sustainability_percent}</p>
               </li>
             ))}
           </ul>

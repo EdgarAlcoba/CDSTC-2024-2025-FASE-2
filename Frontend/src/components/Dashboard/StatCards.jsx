@@ -86,7 +86,7 @@ const Card = ({
     <div className='flex items-start 
     justify-between'>
       <div>
-        <h3 className='text-stone-500 mb-2 text-sm'>
+        <h3 className='text-stone-500 mb-2 text-base'>
           {title}
         </h3>
         <p className='text-3xl font-semibold'>{value}

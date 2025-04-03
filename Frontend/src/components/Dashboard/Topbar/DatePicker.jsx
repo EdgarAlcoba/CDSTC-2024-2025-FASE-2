@@ -27,7 +27,7 @@ const DatePicker = () => {
             minDate={MIN_DATE}
             maxDate={MAX_DATE}
             asSingle={true}
-            primaryColor={"emerald"}
+            primaryColor={"green"}
             value={value} 
             onChange={handleChange}
         /> 

@@ -75,7 +75,7 @@ const AreaChartCard = ({title, description, variable, percentage, data, dates}) 
       <div className="flex justify-between">
         <div>
           <p className="text-gray-700 font-bold mb-2 text-xl">{title}</p>
-          <p className="text-gray-400 text-sm">{description}</p>
+          <p className="text-stone-500 text-sm">{description}</p>
         </div>
       </div>
 
