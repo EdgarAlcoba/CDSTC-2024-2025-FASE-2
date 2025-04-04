@@ -20,7 +20,7 @@ Es necesario modificar las siguientes variables de entorno en el archivo docker-
 
 ```shell
 MYSQL_DATABASE = Nombre de la base de datos
-MYSQL_ROOT_PASSWORD = Contraseña de la base de datos
+MYSQL_ROOT_PASSWORD = Contraseña del administrador de la base de datos
 OPENAI_API_KEY = Api key de OpenAI
 ```
 #### Paso 3:
@@ -48,7 +48,6 @@ Modify the following environment variables in the docker-compose file or add the
 ```shell
 MYSQL_DATABASE = Name of MySQL database
 MYSQL_ROOT_PASSWORD = Password for root user of MySQL database
-NODE_ENV = DEV ó PROD
 OPENAI_API_KEY = Api key de OpenAI
 ```
 #### Step 3:
