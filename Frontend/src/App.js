@@ -10,6 +10,7 @@ import TripPlanner from './pages/TripPlanner/TripPlanner';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Map from './components/Map/Map'
+import PlannerResult from './components/PlannerResult/PlannerResult';
 
 function App() {
   //let inicio = false;
@@ -34,6 +35,7 @@ function App() {
           <Route path='/travelplanner' element={<TripPlanner />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/map' element={<Map />} />
+          <Route path='/plannerresult' element={<PlannerResult />} />
         </Routes>
       </Router>
       <header className="App-header">
