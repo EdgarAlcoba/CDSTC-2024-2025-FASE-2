@@ -64,11 +64,11 @@ const TripPlanner = () => {
 
         <div className="mt-5 bg-gray-100 py-5 rounded-lg mx-5">
             <div className="flex justify-center">
-                <h2 className="font-semibold text-3xl">What could I plan for you?</h2>
+                <h2 className="font-semibold text-3xl">¿Cómo te imaginas tu próximo viaje?</h2>
             </div>
             <div className="flex justify-center">
               <p className="mt-3 text-gray-500">
-              Our AI powered assistant will help you plan it in details
+              Nuestro asistente potenciado por IA te ayudará a planearlo en detalle.
               </p>
             </div>
         </div>
