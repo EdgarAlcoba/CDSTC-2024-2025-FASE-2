@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../Assets/logoipsum-215.svg';
+import Logo from '../Assets/greentrip.svg';
 import { Box, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, List } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
@@ -27,7 +27,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="flex items-center justify-between min-h-[80px] max-h-[10vh] shadow-sm hover:shadow-xl 
+    <nav className="flex items-center justify-between min-h-[80px] max-h-[15vh] shadow-sm hover:shadow-xl 
     bg-tea-green rounded-xl mt-4 mx-5">
 
       <div className="mt-2.5 ml-5 mb-2.5 max-w-[200px]">
