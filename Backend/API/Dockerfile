@@ -4,10 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN apt-get update && apt-get install -y locales \
- && locale-gen es_ES.UTF-8 \
- && update-locale LANG=es_ES.UTF-8
-
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
 
