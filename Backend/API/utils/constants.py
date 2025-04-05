@@ -63,14 +63,33 @@ def init_superadmin(constants: dict[str,any]) -> any:
     constants["SUPERADMIN_PASSWORD"] = superadmin_password
 
 def init_ai(constants: dict[str,any]):
-    ai_batch_size = os.environ.get("AI_BATCH_SIZE", 1000)
+    embeddings_generation_batch_size = os.environ.get("EMBEDDINGS_GENERATION_BATCH_SIZE", 1000)
     try:
-        ai_batch_size = int(ai_batch_size)
-        if ai_batch_size < 1:
+        embeddings_generation_batch_size = int(embeddings_generation_batch_size)
+        if embeddings_generation_batch_size < 1:
             raise ValueError
     except ValueError:
-        raise RuntimeError("AI_BATCH_SIZE must be a positive integer")
-    constants["AI_BATCH_SIZE"] = ai_batch_size
+        raise RuntimeError("EMBEDDINGS_GENERATION_BATCH_SIZE must be a positive integer")
+    constants["EMBEDDINGS_GENERATION_BATCH_SIZE"] = embeddings_generation_batch_size
+
+    vectordb_port = os.environ.get("VECTORDB_PORT", 6333)
+    try:
+        vectordb_port = int(vectordb_port)
+        if vectordb_port < 1:
+            raise ValueError
+    except ValueError:
+        raise RuntimeError("VECTORDB_PORT must be a positive integer")
+    constants["VECTORDB_PORT"] = vectordb_port
+
+    openai_api_key = os.environ.get("OPENAI_API_KEY", None)
+    if (openai_api_key is None) or (len(openai_api_key) < 1):
+        raise RuntimeError("OPENAI_API_KEY cannot be empty")
+    constants["OPENAI_API_KEY"] = openai_api_key
+
+    qdrant_collection_name = os.environ.get("QDRANT_COLLECTION_NAME", "Reviews")
+    if (qdrant_collection_name is None) or (len(openai_api_key) < 1):
+        raise RuntimeError("QDRANT_COLLECTION_NAME cannot be empty")
+    constants["QDRANT_COLLECTION_NAME"] = qdrant_collection_name
 
 def init() -> dict[str, any]:
     constants = {}
