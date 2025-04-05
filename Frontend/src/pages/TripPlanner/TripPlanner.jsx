@@ -10,6 +10,7 @@ import Alert from '@mui/material/Alert';
 import NavBar from '../../components/Navbar/Navbar'
 import SelectDays from "./steps/SelectDays";
 import { useNavigate } from "react-router-dom";
+import SelectConsiderations from "./steps/SelectConsiderations";
 
 const TripPlanner = () => {
   const navigate = useNavigate()
@@ -21,6 +22,7 @@ const TripPlanner = () => {
     transport: "",
     activities: [],
     budget: 0,
+    considerations: ""
   });
 
   const pageDisplay = () => {
@@ -36,6 +38,8 @@ const TripPlanner = () => {
       case 4:
         return <SelectBudget tripData={tripData} setTripData={setTripData} />;
       case 5:
+        return <SelectConsiderations tripData={tripData} setTripData={setTripData} />;
+      case 6:
         return <Summary tripData={tripData} />;
       default:
         break;
@@ -43,7 +47,7 @@ const TripPlanner = () => {
   }
 
   const onGenerateTrip = () => {
-    if (tripData.destination === "" || tripData.transport === "" || tripData.activities.length === 0 || tripData.budget === 0) {
+    if (tripData.destination === "" || tripData.transport === "" || tripData.activities.length === 0 || tripData.budget === 0 || tripData.considerations ==="") {
       setSnackbarOpen(true);
       return;
     }
