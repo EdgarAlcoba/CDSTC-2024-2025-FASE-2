@@ -1,7 +1,6 @@
-from http.client import HTTPException
 from typing import final
 
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException
 from pandas import pandas as pd
 from sqlalchemy import text, select, func
 from datetime import date
