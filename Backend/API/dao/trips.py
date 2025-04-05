@@ -7,6 +7,11 @@ from ..utils.db import get_session
 
 class Trips:
     @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(Trip)).scalars().all()
+
+    @staticmethod
     def add(user: User, raw_trip: object) -> object:
         session = next(get_session())
         trip = Trip(

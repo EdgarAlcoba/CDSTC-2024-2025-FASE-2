@@ -3,10 +3,16 @@ from pandas import pandas as pd
 from sqlalchemy import select, text
 
 from ..dto.city import City
+from ..dto.touristic_route import TouristicRoute
 from ..utils.validate_csv import validate_rutas_turisticas
 from ..utils.db import get_session
 
 class TouristicRoutes:
+    @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(TouristicRoute)).scalars().all()
+
     @staticmethod
     def import_from_csv(valid_files: dict[str, UploadFile]):
         rutas_turisticas_turisticas_file = valid_files["rutas_turisticas"].file

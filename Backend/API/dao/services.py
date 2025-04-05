@@ -11,6 +11,11 @@ from ..dto.service import Service
 
 class Services:
     @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(Service)).scalars().all()
+
+    @staticmethod
     def get_all():
         session = next(get_session())
         db_services = session.execute(select(Service)).scalars().all()

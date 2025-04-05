@@ -9,6 +9,11 @@ from ..utils.db import get_session
 
 class HotelsOccupation:
     @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(HotelOccupation)).scalars().all()
+
+    @staticmethod
     def get_occupations_avg_percent(occupation_on: date, city_id: int) -> float|None:
         session = next(get_session())
         db_hotels_occupations_avg_percent: float = \

@@ -12,6 +12,11 @@ from ..dto.city import City
 
 class Hotels:
     @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(Hotel)).scalars().all()
+
+    @staticmethod
     def get_all():
         session = next(get_session())
         db_hotels = session.execute(select(Hotel)).scalars().all()

@@ -7,8 +7,8 @@ class HotelOccupation(SQLModel, table=True):
     occupation_on: date = Field(nullable=False)
     rate_percent: int = Field(nullable=False)
     confirmed_reservations: int = Field(nullable=False)
-    cancellations: float = Field(nullable=False)
-    avg_night_price: int = Field(nullable=False)
+    cancellations: int = Field(nullable=False)
+    avg_night_price: float = Field(nullable=False)
     hotel_id: int = Field(foreign_key="Hotels.id", nullable=False)
 
     hotel: "Hotel" = Relationship(back_populates="occupations")

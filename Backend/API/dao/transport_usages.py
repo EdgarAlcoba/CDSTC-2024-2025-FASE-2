@@ -3,11 +3,17 @@ from pandas import pandas as pd
 from sqlalchemy import select, text
 
 from ..dto.city import City
+from ..dto.transport_usage import TransportUsage
 from ..utils.db import get_session
 from ..utils.validate_csv import validate_datos_uso_transporte
 
 
 class TransportUsages:
+    @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(TransportUsage)).scalars().all()
+
     @staticmethod
     def import_from_csv(valid_files: dict[str, UploadFile]):
         uso_transporte_file = valid_files["uso_transporte"].file

@@ -12,9 +12,15 @@ from ..dto.city import City
 from ..dto.hotel import Hotel
 from ..dto.service import Service
 from ..dto.user import User
+from ..dto.review import Review
 from ..dao.users import Users
 
 class Reviews:
+    @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(Review)).scalars().all()
+
     @staticmethod
     def import_from_csv(valid_files: dict[str, UploadFile]):
         opiniones_turisticas_file = valid_files["opiniones_turisticas"].file

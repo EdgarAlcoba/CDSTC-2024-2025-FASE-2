@@ -8,7 +8,7 @@ class User(SQLModel, table=True):
     surname: str = Field(nullable=False)
     email: str = Field(nullable=False, unique=True)
     password: str = Field(nullable=False)
-    profile_picture: str = Field(nullable=False)
+    profile_picture: str = Field(nullable=False, default="default_profile_picture.png")
     mock: bool = Field(default=True, nullable=False)
     role: str = Field(nullable=False, default="basic")
     twofactor_master: Optional[str] = Field(default=None, max_length=32)

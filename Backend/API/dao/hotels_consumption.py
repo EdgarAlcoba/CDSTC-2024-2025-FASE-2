@@ -10,6 +10,11 @@ from ..dto.hotel_consumption import HotelConsumption
 
 class HotelsConsumption:
     @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(HotelConsumption)).scalars().all()
+
+    @staticmethod
     def get_average_eco_index(consumed_on: date, city_id: int) -> float|None:
         session = next(get_session())
         db_hotels_average_eco_index: float = \

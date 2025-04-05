@@ -9,6 +9,11 @@ from ..dto.user import User
 
 class Users:
     @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(User)).scalars().all()
+
+    @staticmethod
     def create(name: str, surname: str, email: str, password: str, mock: bool, role: str = "basic"):
         session = next(get_session())
         db_emails: list[User] = session.exec(select(User).where(User.email == email)).all()

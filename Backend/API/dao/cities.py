@@ -15,6 +15,11 @@ from ..utils.validate_csv import validate_datos_uso_transporte
 
 class Cities:
     @staticmethod
+    def get_all_rows():
+        session = next(get_session())
+        return session.execute(select(City)).scalars().all()
+
+    @staticmethod
     def get_all():
         session = next(get_session())
         db_cities = session.execute(select(City)).scalars().all()
@@ -94,9 +99,9 @@ class Cities:
         # Return the data as a dictionary
         return {
             "city": city_name,
-            "sustainability_percent": sustainability_percent,
+            "sustainability_percent": round(sustainability_percent, 1),
             "total_energy_kwh": total_energy_kwh,
-            "average_recycle_percent": average_recycle_percent,
+            "average_recycle_percent": round(average_recycle_percent, 1),
             "total_waste_kg": total_waste_kg,
             "total_water_usage_m3": total_water_usage_m3,
         }
