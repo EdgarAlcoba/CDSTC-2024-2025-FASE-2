@@ -42,7 +42,7 @@ const Profile = () => {
 
 
     return (
-        <div className="h-full bg-white pt-1">
+        <div className="h-screen bg-white pt-1">
             <Navbar />
             <div className="flex flex-col items-center justify-center">
                 {tripList.map((item, index) => (
