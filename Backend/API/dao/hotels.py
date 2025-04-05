@@ -47,8 +47,8 @@ class Hotels:
             raise HTTPException(status_code=400, detail="You must first add cities in order to add hotels")
 
         insert_hotels_sql = """
-               INSERT INTO Hotels (name, stars, description, cancel_time_limit_h, city_id)
-               VALUES (:name, :stars, :description, :cancel_time_hr, :city_id)
+               INSERT INTO Hotels (name, stars, city_id)
+               VALUES (:name, :stars, :city_id)
                ON DUPLICATE KEY UPDATE name = name;
            """
         insert_hotels_data: list[object] = []
@@ -99,8 +99,6 @@ class Hotels:
             insert_hotels_data.append({
                 "name": csv_hotel_name,
                 "stars": 0,
-                "description": "",
-                "cancel_time_hr": None,
                 "city_id": city_id
             })
 
