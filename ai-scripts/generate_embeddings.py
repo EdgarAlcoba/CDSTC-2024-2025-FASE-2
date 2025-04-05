@@ -4,7 +4,6 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, PointStruct
 import math
 
-
 openai_client = OpenAI(api_key="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")
 qdrant_client = QdrantClient("localhost", port=6333)
 
@@ -20,9 +19,7 @@ def generate_embeddings(texts):
         input=texts,
         encoding_format="float"
     )
-    
-    print(len(response.data))
-    
+        
     return [embedding.embedding for embedding in response.data]
 
 # Check if the collection exists, if not create one
@@ -74,5 +71,3 @@ def process_in_batches(df, batch_size=500):
 
 # Process the CSV file in batches of 500
 process_in_batches(df, batch_size=500)
-
-print("Embeddings and payloads successfully inserted into Qdrant.")
