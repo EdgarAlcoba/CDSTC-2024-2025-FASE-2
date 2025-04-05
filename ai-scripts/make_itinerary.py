@@ -1,7 +1,7 @@
 from openai import OpenAI
 from qdrant_client import QdrantClient
 
-openai_client = OpenAI(api_key="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")
+openai_client = OpenAI(api_key="")
 qdrant_client = QdrantClient("localhost", port=6333)
 
 collection_name = "Reviews"
