@@ -133,9 +133,9 @@ def validate_ocupacion_hostelera(row: pd.Series, row_num: int):
             status_code=400,
             detail=f"{filename} has an invalid cancellations number in row {row_num}, must be an integer"
         )
-    csv_avg_night_price: int
+    csv_avg_night_price: float
     try:
-        csv_avg_night_price = int(row["precio_promedio_noche"])
+        csv_avg_night_price = float(row["precio_promedio_noche"])
     except ValueError:
         raise HTTPException(
             status_code=400,
