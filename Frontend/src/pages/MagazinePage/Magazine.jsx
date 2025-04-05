@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Magazine = () => {
+  const token = sessionStorage.getItem("token");
+
   const cityNames = {
     0: "GreenLake Village",
     1: "Aruba Central",
@@ -39,7 +41,6 @@ const Magazine = () => {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           setHotelsData(data);
         })
         .catch((err) => {
@@ -92,7 +93,7 @@ const Magazine = () => {
               <></>
             )}
           </p>
-          <Link to="/travelplanner">
+          <Link to={token ? "/travelplanner": "/login"}>
             <button
               className={`bg-white hover:bg-blue-400 hover:shadow-xl transition-all duration-300 px-4 py-3 rounded-full text-lg uppercase border border-transparent mt-2`}
             >

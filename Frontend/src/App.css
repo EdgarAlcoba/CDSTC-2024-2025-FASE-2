@@ -1,4 +1,4 @@
-* {
+*  {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -23,6 +23,9 @@ body {
     width: 100dvw;
     overflow-x: hidden;
     background: radial-gradient(#31a9ff, #232323 85%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .navbar-menu-container {
@@ -60,7 +63,7 @@ body {
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .nav-logo-container {
         margin-left: 20px;
         max-width: 180px;

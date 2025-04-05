@@ -21,7 +21,7 @@ const Home = () => {
       <div className='flex flex-col items-center justify-center h-[80vh] space-y-5'>
         <label className='text-black text-7xl font-bold'>GreenTrip</label>
         <label className='text-black text-3xl'>Your smart travel planner</label>
-        <Link to='/register'>
+        <Link to='/magazine'>
           <button className='px-7 py-3.5 bg-emerald text-black outline-none border-none rounded-[5rem] text-[1.5rem] 
           font-thin cursor-pointer transition duration-200 hover:shadow-2xl hover:bg-tea-green shadow-md'>Get started</button>
         </Link>
