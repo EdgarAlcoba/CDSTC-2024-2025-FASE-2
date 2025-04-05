@@ -12,8 +12,11 @@ const RegisterForm = () => {
     if (data.get("password") === data.get("repeat-password")) {
       axios
         .post("http://localhost:4040/api/register", {
-          username: data.get("username"),
+          email: data.get("username"),
           password: data.get("password"),
+          name:"",
+          surname:"",
+          mock: true
         })
         .then(function (response) {
           alert("Register process completed succesfully")
