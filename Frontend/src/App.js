@@ -35,39 +35,12 @@ function App() {
           <Route path='/magazine' element={<Magazine />} />
           <Route path='/travelplanner' element={<TripPlanner />} />
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/map' element={<Map />} />
           <Route path='/plannerresult' element={<PlannerResultPage />} />
           <Route path='/profile' element={<Profile />} />
         </Routes>
       </Router>
       <header className="App-header">
         {getComp()}
-        {/*<img src={logo} className="App-logo" alt="logo" />
-        <h1>
-          DOC GPT
-        </h1>
-        <FacebookLogin
-          appId="1082300983025211"
-          icon="fa-facebook"
-          style={{
-            backgroundColor: '#4267b2',
-            color: '#fff',
-            fontSize: '16px',
-            padding: '12px 24px',
-            border: 'none',
-            borderRadius: '4px',
-          }}
-          onSuccess={(response) => {
-            console.log('Login Success!', response);
-          }}
-          onFail={(error) => {
-            console.log('Login Failed!', error);
-          }}
-          onProfileSuccess={(response) => {
-            console.log('Get Profile Success!', response);
-          }}
-        />
-        */}
       </header>
     </div>
   );
