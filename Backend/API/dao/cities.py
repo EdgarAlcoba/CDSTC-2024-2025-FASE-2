@@ -1,8 +1,12 @@
+from http.client import HTTPException
+from typing import final
+
 from fastapi import UploadFile
 from pandas import pandas as pd
-from sqlalchemy.orm import selectinload
 from sqlalchemy import text, select, func
+from datetime import date
 
+from ..dto.hotel_consumption import HotelConsumption
 from ..utils.db import get_session
 from ..dto.city import City
 from ..dto.hotel import Hotel
@@ -53,6 +57,57 @@ class Cities:
             })
 
         return list(city_dict.values())
+
+    @staticmethod
+    def get_info(city_name: str, on: date):
+        city: City = Cities.find_by_name(city_name)
+        if city is None:
+            raise HTTPException(status_code=400, detail=f"City {city_name} not found")
+        session = next(get_session())
+        cities_consumptions = session.execute(
+            select(
+                City.name,
+                HotelConsumption.sustainability_percent,
+                func.sum(HotelConsumption.energy_kwh).label("total_energy_kwh"),
+                func.avg(HotelConsumption.recycle_percent).label("average_recycle_percent"),
+                func.sum(HotelConsumption.waste_kg).label("total_waste_kg"),
+                func.sum(HotelConsumption.water_usage_m3).label("total_water_usage_m3")
+            )
+            .join(Hotel, Hotel.city_id == City.id)
+            .join(HotelConsumption, HotelConsumption.hotel_id == Hotel.id)
+            .filter(City.id == city.id, HotelConsumption.consumed_on == on)
+            .group_by(City.name, HotelConsumption.sustainability_percent)
+        ).fetchone()  # fetchone() to get the first result tuple
+
+        # If no result is found
+        if cities_consumptions is None:
+            raise HTTPException(status_code=404, detail="No sustainability data found for this city on the given date")
+
+        # Extract the values from the tuple
+        city_name = cities_consumptions[0]
+        sustainability_percent = cities_consumptions[1]
+        total_energy_kwh = cities_consumptions[2]
+        average_recycle_percent = cities_consumptions[3]
+        total_waste_kg = cities_consumptions[4]
+        total_water_usage_m3 = cities_consumptions[5]
+
+        # Return the data as a dictionary
+        return {
+            "city": city_name,
+            "sustainability_percent": sustainability_percent,
+            "total_energy_kwh": total_energy_kwh,
+            "average_recycle_percent": average_recycle_percent,
+            "total_waste_kg": total_waste_kg,
+            "total_water_usage_m3": total_water_usage_m3,
+        }
+
+    @staticmethod
+    def find_by_name(city_name: str) -> City|None:
+        session = next(get_session())
+        city = session.query(City).filter(City.name == city_name).scalar()
+        if city is None:
+            return None
+        return city
 
     @staticmethod
     def import_from_csv(valid_files: dict[str, UploadFile]):
