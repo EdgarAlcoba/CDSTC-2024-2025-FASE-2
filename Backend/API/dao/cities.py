@@ -6,6 +6,7 @@ from sqlalchemy import text, select, func
 from datetime import date
 
 from ..dto.hotel_consumption import HotelConsumption
+from ..dto.hotel_occupation import HotelOccupation
 from ..utils.db import get_session
 from ..dto.city import City
 from ..dto.hotel import Hotel
@@ -75,10 +76,13 @@ class Cities:
                 func.sum(HotelConsumption.energy_kwh).label("total_energy_kwh"),
                 func.avg(HotelConsumption.recycle_percent).label("average_recycle_percent"),
                 func.sum(HotelConsumption.waste_kg).label("total_waste_kg"),
-                func.sum(HotelConsumption.water_usage_m3).label("total_water_usage_m3")
+                func.sum(HotelConsumption.water_usage_m3).label("total_water_usage_m3"),
+                func.avg(HotelOccupation.avg_night_price).label("avg_night_price"),
+                func.avg(HotelOccupation.rate_percent).label("occupation_average_percent")
             )
             .join(Hotel, Hotel.city_id == City.id)
             .join(HotelConsumption, HotelConsumption.hotel_id == Hotel.id)
+            .join(HotelOccupation, HotelOccupation.hotel_id == Hotel.id)
             .filter(City.id == city.id, HotelConsumption.consumed_on == on)
             .group_by(City.name, HotelConsumption.sustainability_percent)
         ).fetchone()  # fetchone() to get the first result tuple
@@ -94,6 +98,8 @@ class Cities:
         average_recycle_percent = cities_consumptions[3]
         total_waste_kg = cities_consumptions[4]
         total_water_usage_m3 = cities_consumptions[5]
+        avg_night_price = cities_consumptions[6]
+        occupation_average_percent = cities_consumptions[7]
 
         # Return the data as a dictionary
         return {
@@ -103,6 +109,8 @@ class Cities:
             "average_recycle_percent": round(average_recycle_percent, 1),
             "total_waste_kg": total_waste_kg,
             "total_water_usage_m3": total_water_usage_m3,
+            "avg_night_price": round(avg_night_price, 1),
+            "occupation_average_percent": round(occupation_average_percent, 1)
         }
 
     @staticmethod
