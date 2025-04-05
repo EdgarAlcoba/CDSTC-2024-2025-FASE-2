@@ -62,11 +62,22 @@ def init_superadmin(constants: dict[str,any]) -> any:
         raise RuntimeError("SUPERADMIN_PASSWORD cannot be empty")
     constants["SUPERADMIN_PASSWORD"] = superadmin_password
 
+def init_ai(constants: dict[str,any]):
+    ai_batch_size = os.environ.get("AI_BATCH_SIZE", 1000)
+    try:
+        ai_batch_size = int(ai_batch_size)
+        if ai_batch_size < 1:
+            raise ValueError
+    except ValueError:
+        raise RuntimeError("AI_BATCH_SIZE must be a positive integer")
+    constants["AI_BATCH_SIZE"] = ai_batch_size
+
 def init() -> dict[str, any]:
     constants = {}
     init_sustainability(constants)
     init_jwt(constants)
     init_superadmin(constants)
+    init_ai(constants)
     return constants
 
 
