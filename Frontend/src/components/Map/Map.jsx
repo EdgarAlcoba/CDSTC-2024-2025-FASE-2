@@ -1,21 +1,73 @@
 import { useState, useEffect } from "react";
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
+import { useDate } from "../../hooks/DateContext";
+import api from '../../Api'
+import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 
 const Map = () => {
   const [selectedId, setSelectedId] = useState("");
+  const [cityData, setCityData] = useState({})
+  const [ocupationIndex, setOcupationIndex] = useState(0);
+
+  const { date } = useDate();
+
+  const settings1 = {
+    width: 120,
+    height: 120,
+    value: ocupationIndex,
+  };
+
+  let formattedDate = date.startDate.toLocaleDateString('en-CA');
 
   // Lista de IDs que queremos detectar
   const validIds = [
-    "Aruba_Central",
-    "Greenlake_Shores",
-    "Nimble_Peak",
-    "Proliant_Village",
-    "Apollo_Heights",
-    "Compostable_Cloud",
-    "Ezmeral_Valley",
-    "Simplicity_Springs",
-    "Alletra_City",
-    "HPE_Innovation_Hub",
+    "Aruba Central",
+    "Greenlake Shores",
+    "Nimble Peak",
+    "Proliant Village",
+    "Apollo Heights",
+    "Compostable Cloud",
+    "Ezmeral Valley",
+    "Simplicity Springs",
+    "Alletra City",
+    "HPE Innovation Hub",
   ];
+
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open === true) {
+      fetch("http://127.0.0.1:4040/cities/info", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          date: formattedDate,
+          city_name: selectedId
+        }),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setCityData(json);
+          setOcupationIndex(json.occupation_average_percent)
+        });
+    }
+  }, [open]);
+
+  function cerrarDialogo() {
+    validIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) element.setAttribute("fill", "#4d4d4d");
+    });
+    setOpen(false);
+  }
 
   const handleClick = (event) => {
     const clickedElement = event.target;
@@ -32,20 +84,57 @@ const Map = () => {
 
       // Highlight clicked element
       clickedElement.setAttribute("fill", "#ffffff");
+      setOpen(true)
     }
   };
 
   return (
     <div className="flex flex-col col-span-6 p-4 rounded border border-stone-300">
+      <Dialog open={open} onClose={() => cerrarDialogo()}>
+        <DialogTitle><span className=" font-bold">{selectedId}</span></DialogTitle>
+        <DialogContent>
+          <div className="flex space-x-5">
+            <div>
+              <p className='text-md text-gray-700'><strong>Sustainability percent: </strong>{cityData.average_recycle_percent} %</p>
+              <p className='text-md text-gray-700'><strong>Average recycle percent: </strong>{cityData.average_recycle_percent} %</p>
+              <p className='text-md text-gray-700'><strong>Average night price: </strong>{cityData.avg_night_price} €</p>
+              <p className='text-md text-gray-700'><strong>Total energy: </strong>{cityData.total_energy_kwh} kwh</p>
+              <p className='text-md text-gray-700'><strong>Total waste: </strong>{cityData.total_waste_kg} kg</p>
+              <p className='text-md text-gray-700'><strong>Total water usage: </strong>{cityData.total_water_usage_m3} m3</p>
+            </div>
+            <div>
+              <p className='text-md font-bold text-gray-700'>Occupation Index</p>
+              <Gauge
+                {...settings1}
+                cornerRadius="50%"
+                sx={(theme) => ({
+                  [`& .${gaugeClasses.valueText}`]: {
+                    fontSize: 32,
+                  },
+                  [`& .${gaugeClasses.valueArc}`]: {
+                    fill: '#86efac',
+                  },
+                  [`& .${gaugeClasses.referenceArc}`]: {
+                    fill: '#EEEDE7',
+                  },
+                })}
+              />
+            </div>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => cerrarDialogo()}>Close</Button>
+        </DialogActions>
+      </Dialog>
       <svg
         id="svg1"
         version="1.1"
         viewBox="10 10 190 190"
-        height="200px"
-        width="200px"
+        height="100%"
+        width="100%"
         xmlns="http://www.w3.org/2000/svg"
         onClick={handleClick}
-        className="w-full h-fit"
+        className="w-full h-fit rounded-md"
       >
         <g id="layer1">
           <path id="rect23" fill="#0ff" d="M8.694 5.434h195.61v195.61H8.694z" />
@@ -115,49 +204,48 @@ const Map = () => {
             stroke-width="1.465"
           >
             <path
-              id="Aruba_Central"
+              id="Aruba Central"
               d="M39.937 154.32s-.067 33.754.102 33.757l32.772.235 10.324-32.633z"
             />
             <path
-              id="Greenlake_Shores"
+              id="Greenlake Shores"
               d="m103.74 89.138 8.645 26.127 33.235.384 11.243-29.008z"
             />
             <path
-              id="Nimble_Peak"
+              id="Nimble Peak"
               d="M100.86 86.641c0-2.69 10.333-20.516 10.333-20.516l29.668-9.106 17.343-19.625 9.51-2.045 6.349 22.533-16.561 25.527z"
             />
             <path
-              id="Proliant_Village"
+              id="Proliant Village"
               d="M112.11 62.587c2.77.322 27.631-10.081 27.631-10.081l17.342-17.882 11.591-2.158s3.266-19.787 2.113-19.595c-1.152.192-46.682-.192-46.682-.192L96.633 34.964l19.003 21.28z"
             />
             <path
-              id="Apollo_Heights"
+              id="Apollo Heights"
               d="M111.42 56.48 96.436 86.833l5.379 14.024-11.911.96-5.379 3.843-7.108 5.763-4.803 7.492-7.876 7.685-11.911-15.37V88.37l41.88-51.101z"
             />
             <path
-              id="Compostable_Cloud"
+              id="Compostable Cloud"
               d="m107.2 115.07-5.571-9.413-11.334.192s-11.481 9.394-10.558 9.661c1.227.356-11.441 13.07-11.92 13.68l-.383 14.888 4.802 6.34 13.063 2.69 6.724 5.378 11.911-11.91 6.532-4.611z"
             />
             <path
-              id="Ezmeral_Valley"
+              id="Ezmeral Valley"
               d="m112.96 118.92 34.195.192 4.803 9.798.768 8.068-4.226 6.532-12.487 4.995-12.871 1.152-9.702-6.435z"
             />
             <path
-              id="Simplicity_Springs"
+              id="Simplicity Springs"
               d="m111.86 146.15-5.352 2.434L94.09 162.24l6.964 12.007 17.866 1.153 22.285-.577 19.403-3.842 10.566-9.797-12.295-18.25-4.61 4.034s-6.724 3.842-9.798 4.226c-3.074.385-11.527 1.153-12.487 1.345s-7.303 1.344-9.03.48c-1.728-.864-11.093-6.867-11.093-6.867z"
             />
             <path
-              id="Alletra_City"
+              id="Alletra City"
               d="m149.97 116.28 5.434 8.966 1.901 7.335 2.174 5.977 14.128 19.833 5.705-7.335 2.717-14.671s3.26-13.856 3.26-14.943 1.087-13.584 1.087-13.584l-.815-11.954-7.336 5.705-5.977 4.618-5.705-.815-8.965-8.965z"
             />
             <path
-              id="HPE_Innovation_Hub"
+              id="HPE Innovation Hub"
               d="m159.61 93.595 8.83 8.558 4.075-.815 12.497-10.052S188 80.419 188 79.332s-1.086-14.943-.815-19.018-4.89-31.515-4.89-31.515l-3.532-9.509-5.026-5.026-2.853 19.425 6.792 22.82-17.722 29.385z"
             />
           </g>
         </g>
       </svg>
-      <h1>Selected city: {selectedId.replaceAll("_", " ")}</h1>
     </div>
   );
 };
