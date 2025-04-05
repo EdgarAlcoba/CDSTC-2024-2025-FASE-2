@@ -8,6 +8,7 @@ import NavButtons from "../../components/TripPlanner/NavButtons";
 import { Snackbar } from "@mui/material";
 import Alert from '@mui/material/Alert';
 import NavBar from '../../components/Navbar/Navbar'
+import SelectDays from "./steps/SelectDays";
 
 const TripPlanner = () => {
   const [step, setStep] = useState(0);
@@ -25,13 +26,15 @@ const TripPlanner = () => {
       case 0:
         return <SelectDestination tripData={tripData} setTripData={setTripData}/>;
       case 1:
-        return <SelectTransport tripData={tripData} setTripData={setTripData}/>;
+        return <SelectDays tripData={tripData} setTripData={setTripData}/>;
       case 2:
-        return <SelectActivities tripData={tripData} setTripData={setTripData}/>;
+        return <SelectTransport tripData={tripData} setTripData={setTripData}/>;    
       case 3:
-        return <SelectBudget tripData={tripData} setTripData={setTripData}/>;
+        return <SelectActivities tripData={tripData} setTripData={setTripData}/>;  
       case 4:
-        return <Summary tripData={tripData}/>; 
+        return <SelectBudget tripData={tripData} setTripData={setTripData}/>;   
+      case 5:
+        return <Summary tripData={tripData}/>;
       default:
         break;
     }
@@ -61,11 +64,11 @@ const TripPlanner = () => {
 
         <div className="mt-5 bg-gray-100 py-5 rounded-lg mx-5">
             <div className="flex justify-center">
-                <h2 className="font-semibold text-3xl">What could I plan for you?</h2>
+                <h2 className="font-semibold text-3xl">¿Cómo te imaginas tu próximo viaje?</h2>
             </div>
             <div className="flex justify-center">
               <p className="mt-3 text-gray-500">
-              Our AI powered assistant will help you plan it in details
+              Nuestro asistente potenciado por IA te ayudará a planearlo en detalle.
               </p>
             </div>
         </div>
