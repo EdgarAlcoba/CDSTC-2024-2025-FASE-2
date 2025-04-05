@@ -5,6 +5,7 @@ from passlib.hash import argon2
 import os
 
 from ..dto.user import User
+from ..dto.trip import Trip
 from ..dto.city import City
 from ..dto.service import Service
 from ..dto.hotel import Hotel

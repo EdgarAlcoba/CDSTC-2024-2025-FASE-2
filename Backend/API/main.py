@@ -7,6 +7,7 @@ from .routers import hotels
 from .routers import users
 from .routers import cities
 from .routers import services
+from .routers import trips
 
 from .utils import lifespan_handler
 
@@ -27,3 +28,4 @@ app.include_router(hotels.router)
 app.include_router(cities.router)
 app.include_router(services.router)
 app.include_router(users.router)
+app.include_router(trips.router)
