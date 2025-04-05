@@ -17,7 +17,9 @@ const DatePicker = () => {
 
     const handleChange = (newValue) => {
         setValue(newValue);
-        setDate(newValue); // Actualiza el estado global
+        if(newValue.startDate && newValue.endDate){
+            setDate(newValue); // Actualiza el estado global
+        }
     };
 
     return (
