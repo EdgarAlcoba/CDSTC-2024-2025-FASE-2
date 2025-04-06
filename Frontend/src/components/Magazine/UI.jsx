@@ -52,7 +52,7 @@ export const UI = () => {
   }, [page]);
 
   return (
-    <>
+    <>{/*
       <main className=" pointer-events-none select-none z-10 fixed  inset-0  flex justify-between flex-col">
         <div className="w-full overflow-auto pointer-events-auto flex justify-center">
           <div className="overflow-auto flex items-center gap-4 max-w-full p-10">
@@ -82,6 +82,7 @@ export const UI = () => {
           </div>
         </div>
       </main>
+      */}
     </>
   );
 };

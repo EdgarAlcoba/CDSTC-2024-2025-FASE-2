@@ -1,34 +1,78 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useDate} from '../../hooks/DateContext'
+import api from '../../Api'
 
 const StatCards = () => {
 
   const { date } = useDate();
+  const [occupation, setOccupation] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [cancellations, setCancellations] = useState(0);
 
   useEffect(() => {
-    /* Llamadas a back y demás */
+
+    let formattedDate = date.startDate.toLocaleDateString('en-CA');
+    api.post('/getOccupation', {
+      date: formattedDate,
+      city_id: 0
+    })
+    .then((response) => {
+      setOccupation(response.data.occupations_avg_percent);
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error al solicitar la ocupación:", error.response.data);
+      } else {
+        console.error("Error desconocido:", error.message);
+      }
+    });
+    
+    api.post('/getAveragePrice', {
+      date: formattedDate,
+      city_id: 0
+    })
+    .then((response) => {
+      setPrice(response.data.average_price);
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error al solicitar el precio:", error.response.data);
+      } else {
+        console.error("Error desconocido:", error.message);
+      }
+    });
+    
+    api.post('/getCancellations', {
+      date: formattedDate,
+      city_id: 0
+    })
+    .then((response) => {
+      setCancellations(response.data.cancellations_sum);
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error al solicitar las cancelaciones:", error.response.data);
+      } else {
+        console.error("Error desconocido:", error.message);
+      }
+    }); 
+    
   }, [date]);
 
   return (
     <>
       <Card
         title="Occupation"
-        value="12,567"
-        percentage="2.34%"
-        trend="up"
-        period="From Jan 1st - Jul 31st" />
+        value={occupation+"%"}
+      />
       <Card 
         title="Avg price/night"
-        value="$122"
-        percentage="4.55%"
-        trend="down"
-        period="From Jan 1st - Jul 31st"/>
+        value={"$"+price}
+      />
       <Card 
         title="Cancellations"
-        value="34"
-        percentage="7%"
-        trend="up"
-        period="Last 30 days"/>
+        value={cancellations}
+      />
     </>
   )
 }
@@ -36,23 +80,17 @@ const StatCards = () => {
 const Card = ({
   title,
   value,
-  percentage,
-  trend,
-  period
   }) => {
   return <div className='col-span-4 p-4 rounded border 
   border-stone-300'>
     <div className='flex items-start 
     justify-between'>
       <div>
-        <h3 className='text-stone-500 mb-2 text-sm'>
+        <h3 className='text-stone-500 mb-2 text-base'>
           {title}
         </h3>
         <p className='text-3xl font-semibold'>{value}
         </p>
-        <h3 className='text-stone-500 mb-2 text-sm'>
-          +{percentage} than yersterday
-        </h3>
       </div>
     </div>
   </div>

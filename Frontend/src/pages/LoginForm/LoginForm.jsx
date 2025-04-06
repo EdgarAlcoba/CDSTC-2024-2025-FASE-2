@@ -10,12 +10,20 @@ const LoginForm = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     axios
-      .post("http://localhost:5000/api/login", {
-        username: data.get("username"),
+      .post("http://localhost:4040/login", {
+        email: data.get("username"),
         password: data.get("password"),
       })
       .then(function (response) {
-        navigate("/chat/" + response.data);
+        //TODO
+        const authHeader = response.headers["authorization"];
+
+        if (authHeader) {
+          sessionStorage.setItem("token", authHeader);
+        } else {
+          console.warn("Usuario no autorizado");
+        }
+        navigate("/")
       })
       .catch(function (error) {
         alert(error.response.data);

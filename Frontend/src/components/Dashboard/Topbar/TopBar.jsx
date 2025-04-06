@@ -7,7 +7,6 @@ const TopBar = () => {
   const { date } = useDate();
     
   useEffect(() => {
-    /* Llamadas a back y demás */
   }, [date]);
 
   return (

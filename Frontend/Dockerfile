@@ -10,6 +10,15 @@ COPY . .
 
 ENV REACT_APP_TESTNAME=testName
 
-EXPOSE 3000
+RUN apk add --no-cache nginx bash
 
-CMD ["npm", "start"]
+EXPOSE 80
+EXPOSE 443
+
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
+COPY ssl /etc/ssl/
+
+RUN npm run build
+
+CMD ["sh", "-c", "nginx -g 'daemon off;'"]

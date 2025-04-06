@@ -1,0 +1,11 @@
+USE HP_CDS_2024_25_FASE_2_NORMALIZED;
+DROP TABLE Hotels_Consumption;
+DROP TABLE Hotels_Occupation;
+DROP TABLE Reviews;
+DROP TABLE Hotels;
+DROP TABLE Services;
+DROP TABLE Touristic_Routes;
+DROP TABLE Transport_Usages;
+DROP TABLE Trips;
+DROP TABLE Cities;
+DROP TABLE Users;

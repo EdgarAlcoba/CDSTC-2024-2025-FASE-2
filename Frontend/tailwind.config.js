@@ -5,7 +5,15 @@ module.exports = {
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'lapis-lazuli': '#22577a',
+        'verdigris': '#38a3a5',
+        'emerald': '#57cc99',
+        'light-green': '#80ed99',
+        'tea-green': '#c7f9cc',
+      }
+    },
   },
   plugins: [],
 }
