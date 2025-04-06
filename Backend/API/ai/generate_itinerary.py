@@ -25,7 +25,7 @@ def generate_embedding(text):
     return response.data[0].embedding
 
 def query_similar_points(destination, destination_description, transport_preference, type_of_tourism, budget, user_interests):
-    qdrant_client = QdrantClient("localhost", port=constants["VECTORDB_PORT"])
+    qdrant_client = QdrantClient(constants["VECTORDB_HOST"], port=constants["VECTORDB_PORT"])
     collection_name = constants["QDRANT_COLLECTION_NAME"]
 
     embedding_text = structure_user_preferences(destination, destination_description, transport_preference, type_of_tourism, budget, user_interests)
