@@ -10,3 +10,5 @@ pandas
 python-multipart>=0.0.20
 pyjwt>=2.10.1
 argon2_cffi>=23.1.0
+openai
+qdrant-client
