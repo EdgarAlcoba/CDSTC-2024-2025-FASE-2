@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   frontend:
     tty: true
@@ -30,8 +28,10 @@ services:
       - DB_PASSWORD=root
       - DB_USERNAME=root
       - DB_HOST=database
+      - VECTORDB_HOST=10.10.10.10
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     networks:
       docnet:
         ipv4_address: 10.10.10.5
@@ -40,16 +40,30 @@ services:
     build: ./Backend/DB
     container_name: db-api-container
     volumes:
-      - ./Backend/DB/mysql:/var/lib/mysql:rw
       - ./Backend/DB/backup.sql:/docker-entrypoint-initdb.d/backup.sql:ro
     ports:
       - "6060:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=cds_db
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
     networks:
       docnet:
         ipv4_address: 10.10.10.7
+
+  qdrant:
+    build: ./Backend/DB_AI
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./Backend/DB_AI/storage:/qdrant/storage
+    networks:
+      docnet:
+        ipv4_address: 10.10.10.10
 
 networks:
   docnet:

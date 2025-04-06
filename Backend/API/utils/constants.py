@@ -95,7 +95,6 @@ def init_ai(constants: dict[str,any]):
     if (qdrant_collection_name is None) or (len(openai_api_key) < 1):
         raise RuntimeError("QDRANT_COLLECTION_NAME cannot be empty")
     constants["QDRANT_COLLECTION_NAME"] = qdrant_collection_name
-
 def init() -> dict[str, any]:
     constants = {}
     init_sustainability(constants)

@@ -12,7 +12,7 @@ class Trips:
         return session.execute(select(Trip)).scalars().all()
 
     @staticmethod
-    def add(user: User, raw_trip: object) -> object:
+    def add(user: User, raw_trip) -> list[any]:
         session = next(get_session())
         trip = Trip(
             data=raw_trip,
@@ -21,10 +21,7 @@ class Trips:
         )
         session.add(trip)
         session.commit()
-        return {
-            "id": trip.id,
-            "created_at": trip.created_at.strftime("%Y-%m-%d %H:%M:%S")
-        }
+        return [trip.id, trip.created_at]
 
     @staticmethod
     def get_all(user: User) -> object:

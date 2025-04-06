@@ -35,6 +35,15 @@ class Cities:
         return cities
 
     @staticmethod
+    def find_by_name(name: str) -> City|None:
+        session = next(get_session())
+        db_city = session.execute(select(City).where(City.name == name)).scalar().first()
+        if not db_city:
+            return None
+        return db_city
+
+
+    @staticmethod
     def get_hotel_ratings():
         session = next(get_session())
 

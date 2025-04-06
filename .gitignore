@@ -1,3 +1,4 @@
 /Backend/DB/mysql/*
 /Frontend/package-lock.json
 ai-scripts/*.csv
+Backend/API/Storage/ai_ok
