@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import os.path
@@ -13,12 +15,11 @@ from ..ai.generate_itinerary import generate_itinerary
 def on_server_start(app: FastAPI):
     init_constants()
     init_db()
-    ai_ok_filepath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Storage', 'ai_ok'))
-    if not os.path.isfile(ai_ok_filepath):
-        print("Generating AI database")
+    try:
         init_db_ai()
-        with open(ai_ok_filepath, "w") as f:
-            pass
+    except Exception as e:
+        if e.status_code != 409:
+            raise RuntimeError(f"AI error: {e}")
 
 def on_server_stop(app: FastAPI):
     x = 0

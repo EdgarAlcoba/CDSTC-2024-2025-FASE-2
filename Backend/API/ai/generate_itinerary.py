@@ -157,6 +157,7 @@ def generate_itinerary(destination, destination_description, duration, transport
     •⁠  ⁠Ten en cuenta el tiempo de traslado entre actividades y ubicaciones geográficas.
     •⁠  ⁠Personaliza las recomendaciones según los intereses y el presupuesto especificados por el usuario.
     •⁠  ⁠Ten en cuenta los hoteles y servicios que he detectado como más similares mediante búsqueda semántica, incluyendo sus reseñas.
+    •⁠  ⁠Completa siempre el JSON y nunca lo acabes con cosas similares a // Otros días seguirán una estructura similar, con una mezcla de actividades ecológicas, gastronómicas y visitas históricas.
     """
 
     similar_points = query_similar_points(destination, destination_description, transport_preference, type_of_tourism, budget, user_interests)
