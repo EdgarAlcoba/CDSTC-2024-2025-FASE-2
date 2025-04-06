@@ -18,7 +18,7 @@ def generate_embeddings_batch(texts):
     return [embedding.embedding for embedding in response.data]
 
 def init_db_ai():
-    qdrant_client = QdrantClient("localhost", port=constants["VECTORDB_PORT"])
+    qdrant_client = QdrantClient(constants["VECTORDB_HOST"], port=constants["VECTORDB_PORT"])
     collection_name = constants["QDRANT_COLLECTION_NAME"]
 
     if collection_name not in qdrant_client.get_collections().collections:
