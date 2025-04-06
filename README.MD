@@ -45,7 +45,6 @@ Clonar el proyecto
 $ git clone https://github.com/EdgarAlcoba/CDSTC-2024-2025-FASE-2.git
 ```
 
-<<<<<<< HEAD
 ```shell
 MYSQL_DATABASE = Nombre de la base de datos
 MYSQL_ROOT_PASSWORD = Contraseña del administrador de la base de datos
@@ -100,7 +99,6 @@ Clone the project
 $ git clone https://github.com/EdgarAlcoba/CDSTC-2024-2025-FASE-2.git
 ```
 
-<<<<<<< HEAD
 ```shell
 MYSQL_DATABASE = Name of MySQL database
 MYSQL_ROOT_PASSWORD = Password for root user of MySQL database
