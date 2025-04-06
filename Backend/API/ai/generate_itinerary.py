@@ -32,7 +32,7 @@ def query_similar_points(destination, destination_description, transport_prefere
     embedding = generate_embedding(embedding_text)
 
     results = {}
-    service_types = ["HOTEL", "SERVICIO"]
+    service_types = ["HOTEL", "SERVICE"]
 
     
     for service_type in service_types:
@@ -111,7 +111,7 @@ def generate_itinerary(destination, destination_description, duration, transport
 
     •⁠  ⁠Destino: París, Francia  
     •⁠  Descripción del destino: Ciudad histórica, con algunos de los merores restaurantes del mundo y exclusivas boutiques para hacer compras.
-    •⁠  ⁠Duración: 3 días  
+    •⁠  ⁠Duración: 1 días  
     •⁠  ⁠Intereses: Museos, gastronomía, compras  
     •⁠  Tipo de turismo: Gastronómico, Histórico
     •⁠  ⁠Presupuesto: Lujo  
@@ -121,7 +121,7 @@ def generate_itinerary(destination, destination_description, duration, transport
     ⁠ json
     {
     "destination": "París, Francia",
-    "duration": 3,
+    "duration": 1,
     "budget": "Lujo",
     "itinerary": [
         {
@@ -147,7 +147,7 @@ def generate_itinerary(destination, destination_description, duration, transport
             }
         ]
         }
-        // Más días seguirían en una estructura similar
+        //Más días seguirían la misma estructura
     ]
     }
 
@@ -176,6 +176,8 @@ def generate_itinerary(destination, destination_description, duration, transport
     Here are some recommended services:
     {similar_points.get('SERVICE')}
     """
+
+    print(user_prompt)
 
     completion = openai_client.chat.completions.create(
         model="gpt-4o",
