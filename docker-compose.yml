@@ -7,8 +7,8 @@ services:
     volumes:
       - ./Frontend/src:/app/src:ro
     ports:
-      - "8080:80"
-      - "4430:443"
+      - "80:80"
+      - "443:443"
     environment:
       - WATCHPACK_POLLING=true #Necesario para usuarios con windows
     networks:
