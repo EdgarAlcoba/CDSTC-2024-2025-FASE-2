@@ -15,4 +15,4 @@ ENV DB_PASSWORD=${DB_PASSWORD}
 ENV DB_USERNAME=${DB_USERNAME}
 ENV DB_PORT=${DB_PORT}
 
-CMD ["fastapi", "dev", "--host", "0.0.0.0", "--port", "4040", "--reload"]
+CMD ["fastapi", "run", "--host", "0.0.0.0", "--port", "4040", "--reload"]
