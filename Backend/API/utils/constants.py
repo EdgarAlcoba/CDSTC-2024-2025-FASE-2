@@ -72,6 +72,11 @@ def init_ai(constants: dict[str,any]):
         raise RuntimeError("EMBEDDINGS_GENERATION_BATCH_SIZE must be a positive integer")
     constants["EMBEDDINGS_GENERATION_BATCH_SIZE"] = embeddings_generation_batch_size
 
+    vectordb_host = os.environ.get("VECTORDB_HOST", "localhost")
+    if len(vectordb_host) < 1:
+        raise RuntimeError("VECTORDB_HOST cannot be empty")
+    constants["VECTORDB_HOST"] = vectordb_host
+
     vectordb_port = os.environ.get("VECTORDB_PORT", 6333)
     try:
         vectordb_port = int(vectordb_port)
