@@ -45,15 +45,8 @@ Clonar el proyecto
 $ git clone https://github.com/EdgarAlcoba/CDSTC-2024-2025-FASE-2.git
 ```
 
-```shell
-MYSQL_DATABASE = Nombre de la base de datos
-MYSQL_ROOT_PASSWORD = Contraseña del administrador de la base de datos
-OPENAI_API_KEY = Api key de OpenAI
-```
-#### Paso 3:
-=======
 #### Paso 2:
->>>>>>> develop
+
 Seleccionar el directorio en el que se haya clonado el repositorio y ejecutar el comando:  
 ```shell
 $ docker-compose up --build
@@ -99,17 +92,9 @@ Clone the project
 $ git clone https://github.com/EdgarAlcoba/CDSTC-2024-2025-FASE-2.git
 ```
 
-```shell
-MYSQL_DATABASE = Name of MySQL database
-MYSQL_ROOT_PASSWORD = Password for root user of MySQL database
-OPENAI_API_KEY = Api key de OpenAI
-```
-#### Step 3:
-Navigate to the directory where the repository was cloned and run the following command:
-=======
 #### Step 2:
 Run the project
->>>>>>> develop
+
 ```shell
 $ docker-compose up --build
 ```
